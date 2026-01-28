@@ -3,232 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLSP Run & Rise Dashboard</title>
+    <title>SLSP Run & Rise</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0EA5E9, #10B981, #F59E0B, #EF4444);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #3B82F6 100%);
             min-height: 100vh;
             padding: 20px;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            backdrop-filter: blur(10px);
+            background: white;
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .logo {
-            margin-bottom: 20px;
-        }
+        .header { text-align: center; margin-bottom: 50px; }
         
         .main-title {
-            font-size: 2.8em;
-            font-weight: bold;
-            background: linear-gradient(45deg, #0EA5E9, #10B981, #F59E0B, #EF4444);
+            font-size: 3em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8B5CF6, #3B82F6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .subtitle {
-            font-size: 1.2em;
-            color: #10B981;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 1.3em;
+            color: #7C3AED;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
         }
         
-        .slogan {
-            font-size: 1em;
-            color: #1E40AF;
-            font-style: italic;
-        }
-        
-        .attribution {
-            font-size: 0.9em;
-            color: #8B5CF6;
-            margin-top: 5px;
-        }
+        .slogan { font-size: 1.1em; color: #3B82F6; font-style: italic; margin-bottom: 8px; }
+        .attribution { font-size: 0.95em; color: #8B5CF6; font-weight: 500; }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
         }
         
         .stat-card {
-            padding: 30px;
-            border-radius: 15px;
+            padding: 45px 35px;
+            border-radius: 20px;
             text-align: center;
             color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
         }
         
-        .stat-card:hover {
-            transform: translateY(-5px);
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: 0.6s;
         }
         
-        .stat-card.start {
-            background: linear-gradient(135deg, #0EA5E9, #0284C7);
-        }
+        .stat-card:hover::before { right: -60%; }
+        .stat-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 45px rgba(0,0,0,0.25); }
         
-        .stat-card.love {
-            background: linear-gradient(135deg, #10B981, #059669);
-        }
+        .stat-card.start { background: linear-gradient(135deg, #10B981, #059669); }
+        .stat-card.love { background: linear-gradient(135deg, #EC4899, #DB2777); }
+        .stat-card.countdown { background: linear-gradient(135deg, #F59E0B, #EA580C); }
         
-        .stat-card.support {
-            background: linear-gradient(135deg, #F59E0B, #D97706);
-        }
-        
-        .stat-icon {
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-        
-        .stat-number {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .stat-label {
-            opacity: 0.9;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
-        
-        .stat-subtitle {
-            opacity: 0.7;
-            font-size: 0.9em;
-        }
-        
-        .erste-route-section {
-            background: white;
-            padding: 40px;
+        .stat-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: rgba(255,255,255,0.2);
             border-radius: 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
         }
+        
+        .stat-number { font-size: 3.5em; font-weight: 900; margin-bottom: 10px; text-shadow: 0 3px 6px rgba(0,0,0,0.2); }
+        .stat-label { font-size: 1.3em; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+        .stat-subtitle { opacity: 0.9; font-size: 1em; }
+        .countdown-event { font-size: 0.95em; font-weight: 600; margin-top: 8px; opacity: 0.95; }
+        
+        .route-section { background: #F9FAFB; padding: 45px; border-radius: 25px; margin-bottom: 50px; }
         
         .route-title {
             text-align: center;
-            font-size: 2em;
+            font-size: 2.2em;
+            font-weight: 800;
             margin-bottom: 15px;
-            background: linear-gradient(45deg, #0EA5E9, #10B981, #F59E0B);
+            background: linear-gradient(135deg, #8B5CF6, #3B82F6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
-        .route-subtitle {
-            text-align: center;
-            color: #6B7280;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
+        .route-subtitle { text-align: center; color: #64748B; margin-bottom: 40px; font-size: 1.15em; font-weight: 500; }
         
-        .route-map-container {
-            position: relative;
-            background: #F9FAFB;
-            padding: 30px;
+        .route-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin: 35px 0; }
+        
+        .route-stat {
+            background: white;
+            padding: 25px;
             border-radius: 15px;
-            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
         
-        .map-image {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
+        .route-stat-number { font-size: 2.2em; font-weight: 800; color: #8B5CF6; }
+        .route-stat-label { color: #64748B; font-size: 0.95em; margin-top: 8px; font-weight: 600; }
+        
+        .current-location {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border: 3px solid #F59E0B;
+            padding: 25px;
+            border-radius: 18px;
+            margin: 35px 0;
+            text-align: center;
         }
         
-        .map-overlay {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            right: 30px;
-            bottom: 30px;
-            pointer-events: none;
+        .current-location-title { font-size: 1.4em; font-weight: 800; color: #92400E; margin-bottom: 12px; }
+        .current-location-text { color: #78350F; font-size: 1.15em; font-weight: 600; }
+        
+        .next-checkpoint {
+            background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
+            border: 3px solid #8B5CF6;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
         }
+        
+        .next-checkpoint-title { font-weight: 700; color: #6B21A8; margin-bottom: 8px; font-size: 1.05em; }
+        .next-checkpoint-km { color: #7C3AED; font-size: 1.35em; font-weight: 800; }
+        
+        .map-container {
+            position: relative;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin: 35px 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        
+        .map-image { width: 100%; height: auto; border-radius: 15px; display: block; }
+        .map-overlay { position: absolute; top: 35px; left: 35px; right: 35px; bottom: 35px; pointer-events: none; }
         
         .city-marker {
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
             pointer-events: all;
-            transition: transform 0.3s ease;
-            border: 3px solid white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
-        .city-marker:hover {
-            transform: scale(1.3);
-            z-index: 10;
-        }
-        
-        .city-marker.completed {
-            background: #10B981;
-        }
-        
-        .city-marker.current {
-            background: #F59E0B;
-            animation: pulse 2s infinite;
-        }
-        
-        .city-marker.locked {
-            background: #9CA3AF;
-        }
+        .city-marker:hover { transform: scale(1.4); z-index: 10; }
+        .city-marker.completed { background: #10B981; }
+        .city-marker.current { background: #F59E0B; animation: pulse 2s infinite; }
+        .city-marker.locked { background: #94A3B8; }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.15); opacity: 0.8; }
+            0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.2); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6); }
         }
         
-        .city-info-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .city-card {
             background: white;
             padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 400px;
-            z-index: 1000;
-            display: none;
-            border: 3px solid #0EA5E9;
+            border-radius: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
         
-        .city-info-popup.show {
-            display: block;
+        .city-card:hover { transform: translateY(-8px); box-shadow: 0 12px 28px rgba(0,0,0,0.15); }
+        .city-card.completed { background: linear-gradient(135deg, #10B981, #059669); color: white; border-color: #10B981; }
+        .city-card.current { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; border-color: #F59E0B; animation: cardPulse 2.5s infinite; }
+        
+        @keyframes cardPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
+        
+        .city-card.locked { opacity: 0.45; }
+        .city-flag { font-size: 3em; margin-bottom: 12px; }
+        .city-name { font-weight: 800; font-size: 1.15em; margin-bottom: 8px; }
+        .city-distance { font-size: 0.9em; opacity: 0.85; font-weight: 600; }
+        .city-status { margin-top: 12px; font-size: 1.4em; }
         
         .popup-overlay {
             position: fixed;
@@ -236,345 +226,151 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 999;
             display: none;
         }
         
-        .popup-overlay.show {
-            display: block;
+        .popup-overlay.show { display: block; }
+        
+        .city-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            max-width: 450px;
+            z-index: 1000;
+            display: none;
+            border: 4px solid #8B5CF6;
         }
         
-        .city-info-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #1F2937;
-        }
+        .city-popup.show { display: block; }
         
-        .city-info-section {
-            margin-bottom: 15px;
-        }
-        
-        .city-info-label {
-            font-weight: 600;
-            color: #0EA5E9;
-            font-size: 0.9em;
-            margin-bottom: 5px;
-        }
-        
-        .city-info-text {
-            color: #4B5563;
-            font-size: 0.95em;
-            line-height: 1.6;
-        }
-        
-        .close-popup {
+        .popup-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
+            top: 18px;
+            right: 22px;
+            font-size: 28px;
             cursor: pointer;
-            color: #6B7280;
+            color: #64748B;
+            transition: 0.3s;
         }
         
-        .close-popup:hover {
-            color: #1F2937;
-        }
-        
-        .route-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin: 30px 0;
-            text-align: center;
-        }
-        
-        .route-stat {
-            background: #F9FAFB;
-            padding: 20px;
-            border-radius: 12px;
-        }
-        
-        .route-stat-number {
-            font-size: 2em;
-            font-weight: bold;
-            color: #0EA5E9;
-        }
-        
-        .route-stat-label {
-            color: #6B7280;
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-        
-        .current-location {
-            background: #FEF3C7;
-            border: 2px solid #F59E0B;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 30px 0;
-            text-align: center;
-        }
-        
-        .current-location-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #92400E;
-            margin-bottom: 10px;
-        }
-        
-        .current-location-text {
-            color: #78350F;
-            font-size: 1.1em;
-        }
-        
-        .next-checkpoint {
-            background: #DBEAFE;
-            border: 2px solid #0EA5E9;
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 15px;
-        }
-        
-        .next-checkpoint-title {
-            font-weight: bold;
-            color: #075985;
-            margin-bottom: 5px;
-        }
-        
-        .next-checkpoint-km {
-            color: #0369A1;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-        
-        .cities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .city-card {
-            background: #F9FAFB;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-        
-        .city-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .city-card.completed {
-            background: linear-gradient(135deg, #10B981, #059669);
-            color: white;
-            border-color: #10B981;
-        }
-        
-        .city-card.current {
-            background: linear-gradient(135deg, #F59E0B, #D97706);
-            color: white;
-            border-color: #F59E0B;
-            animation: cardPulse 2s infinite;
-        }
-        
-        @keyframes cardPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-        
-        .city-card.locked {
-            opacity: 0.5;
-        }
-        
-        .city-flag {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .city-name {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
-        
-        .city-distance {
-            font-size: 0.85em;
-            opacity: 0.8;
-        }
-        
-        .city-status {
-            margin-top: 10px;
-            font-size: 1.2em;
-        }
+        .popup-close:hover { color: #1F2937; transform: rotate(90deg); }
+        .popup-title { font-size: 1.6em; font-weight: 800; margin-bottom: 20px; color: #1F2937; }
+        .popup-section { margin-bottom: 18px; }
+        .popup-label { font-weight: 700; color: #8B5CF6; font-size: 0.95em; margin-bottom: 8px; }
+        .popup-text { color: #475569; font-size: 1em; line-height: 1.7; }
         
         .admin-panel {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 30px;
-            border: 2px dashed #dee2e6;
+            background: #F8FAFC;
+            padding: 30px;
+            border-radius: 18px;
+            margin-top: 40px;
+            border: 2px dashed #CBD5E1;
         }
         
         .admin-toggle {
-            background: #6B7280;
+            background: #64748B;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 10px;
             cursor: pointer;
-            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1em;
+            transition: 0.3s;
         }
         
-        .admin-toggle:hover {
-            background: #4B5563;
-        }
+        .admin-toggle:hover { background: #475569; transform: translateY(-2px); }
         
-        .admin-login {
-            display: none;
-        }
-        
-        .admin-login.active {
-            display: block;
-        }
-        
-        .admin-form {
-            display: none;
-        }
-        
-        .admin-form.active {
+        .admin-login, .admin-form { display: none; margin-top: 25px; }
+        .admin-login.active, .admin-form.active {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
             align-items: end;
         }
         
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #495057;
-            font-size: 0.9em;
-        }
-        
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { margin-bottom: 8px; font-weight: 700; color: #475569; font-size: 0.95em; }
         .form-group input {
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 14px;
+            padding: 12px 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: 0.3s;
         }
         
-        .update-btn {
-            background: #10B981;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+        .form-group input:focus { outline: none; border-color: #8B5CF6; }
+        
+        .login-btn, .update-btn {
+            padding: 12px 25px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .update-btn:hover {
-            background: #059669;
-        }
-        
-        .login-btn {
-            background: #0EA5E9;
-            color: white;
+            font-weight: 700;
+            font-size: 1em;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
+            color: white;
+            transition: 0.3s;
         }
         
-        .login-btn:hover {
-            background: #0284C7;
-        }
+        .login-btn { background: #8B5CF6; }
+        .login-btn:hover { background: #7C3AED; transform: translateY(-2px); }
+        .update-btn { background: #10B981; }
+        .update-btn:hover { background: #059669; transform: translateY(-2px); }
         
-        .error-message {
-            color: #DC2626;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-        
-        .last-updated {
-            text-align: center;
-            color: #6c757d;
-            font-size: 0.9em;
-            margin-top: 20px;
-            font-style: italic;
-        }
+        .error-message { color: #DC2626; margin-top: 12px; font-size: 0.95em; font-weight: 600; }
+        .last-updated { text-align: center; color: #64748B; font-size: 0.95em; margin-top: 25px; font-style: italic; }
         
         @media (max-width: 768px) {
-            .main-title {
-                font-size: 2.2em;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .route-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .cities-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .admin-form {
-                grid-template-columns: 1fr;
-            }
+            .container { padding: 30px 20px; }
+            .main-title { font-size: 2.2em; }
+            .stats-grid, .route-stats, .cities-grid { grid-template-columns: 1fr; }
+            .stat-card { padding: 35px 25px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">🏃‍♂️</div>
             <h1 class="main-title">SLSP Run & Rise</h1>
-            <p class="subtitle">Start. Love. Support. Purpose.</p>
+            <p class="subtitle">START · LOVE · SUPPORT · PURPOSE</p>
             <p class="slogan">"Začni s nami a bež za budúcnosť"</p>
             <p class="attribution">Iniciatíva Women's Voices</p>
         </div>
         
         <div class="stats-grid">
             <div class="stat-card start">
-                <div class="stat-icon">▶️</div>
+                <div class="stat-icon-wrapper">👭</div>
                 <div class="stat-number" id="totalRunners">0</div>
                 <div class="stat-label">START</div>
-                <div class="stat-subtitle">Aktívnych bežcov</div>
+                <div class="stat-subtitle">Aktívnych bežkýň</div>
             </div>
             
             <div class="stat-card love">
-                <div class="stat-icon">❤️</div>
+                <div class="stat-icon-wrapper">❤️</div>
                 <div class="stat-number" id="totalKm">0</div>
                 <div class="stat-label">LOVE</div>
                 <div class="stat-subtitle">Nabehané kilometre</div>
             </div>
             
-            <div class="stat-card support">
-                <div class="stat-icon">🤝</div>
-                <div class="stat-number" id="totalEuro">0€</div>
-                <div class="stat-label">SUPPORT</div>
-                <div class="stat-subtitle">Pre dobrú vec</div>
+            <div class="stat-card countdown">
+                <div class="stat-icon-wrapper">⏳</div>
+                <div class="stat-number" id="countdownDays">0</div>
+                <div class="stat-label">DNÍ</div>
+                <div class="stat-subtitle">do behu</div>
+                <div class="countdown-event">Od Tatier k Dunaju<br>15. augusta 2026</div>
             </div>
         </div>
         
-        <div class="erste-route-section">
+        <div class="route-section">
             <h2 class="route-title">🗺️ Erste Group Journey</h2>
-            <p class="route-subtitle">Bratislava → Budapešť → Bukurešť → Belehrad → Záhreb → Viedeň → Praha → Košice → Bratislava</p>
+            <p class="route-subtitle">Bratislava → Budapešť → Bukurešť → Belehrad → Záhreb → Viedeň → Praha → Krakov → Košice → Bratislava</p>
             
             <div class="route-stats">
                 <div class="route-stat">
@@ -586,30 +382,29 @@
                     <div class="route-stat-label">Cesty dokončené</div>
                 </div>
                 <div class="route-stat">
-                    <div class="route-stat-number" id="routeCities">0/8</div>
+                    <div class="route-stat-number" id="routeCities">0/9</div>
                     <div class="route-stat-label">Navštívené mestá</div>
                 </div>
             </div>
             
-            <div class="current-location" id="currentLocation">
+            <div class="current-location">
                 <div class="current-location-title">📍 Aktuálna pozícia</div>
                 <div class="current-location-text" id="currentLocationText">Štart v Bratislave</div>
                 
                 <div class="next-checkpoint" id="nextCheckpoint">
                     <div class="next-checkpoint-title">Ďalší checkpoint:</div>
-                    <div class="next-checkpoint-km" id="nextCheckpointText">🇭🇺 Budapešť - 200 km</div>
+                    <div class="next-checkpoint-km" id="nextCheckpointText">Budapešť - 184 km</div>
                 </div>
             </div>
             
-            <div class="route-map-container" id="mapContainer">
-                <img src="map.png" alt="Erste Route Map" class="map-image" id="routeMapImage">
+            <div class="map-container">
+                <img src="map.png" alt="Erste Route Map" class="map-image">
                 <div class="map-overlay" id="mapOverlay"></div>
             </div>
             
             <div class="cities-grid" id="citiesGrid"></div>
         </div>
         
-        <!-- Admin panel -->
         <div class="admin-panel">
             <button class="admin-toggle" onclick="toggleAdmin()">⚙️ Aktualizovať údaje</button>
             
@@ -626,153 +421,67 @@
             
             <div class="admin-form" id="adminForm">
                 <div class="form-group">
-                    <label>Počet bežcov</label>
-                    <input type="number" id="inputRunners" min="0">
+                    <label>Počet bežkýň</label>
+                    <input type="number" id="inputRunners" min="0" value="0">
                 </div>
-                
                 <div class="form-group">
                     <label>Celkové km</label>
-                    <input type="number" id="inputKm" step="0.1" min="0">
+                    <input type="number" id="inputKm" step="0.1" min="0" value="0">
                 </div>
-                
                 <div class="form-group">
                     <button class="update-btn" onclick="updateData()">Aktualizovať</button>
                 </div>
             </div>
         </div>
         
-        <div class="last-updated" id="lastUpdated">
-            Posledná aktualizácia: Nikdy
-        </div>
+        <div class="last-updated" id="lastUpdated">Posledná aktualizácia: Nikdy</div>
     </div>
     
-    <!-- Popup overlay -->
     <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
     
-    <!-- City info popup -->
-    <div class="city-info-popup" id="cityInfoPopup">
-        <span class="close-popup" onclick="closePopup()">×</span>
+    <div class="city-popup" id="cityPopup">
+        <span class="popup-close" onclick="closePopup()">×</span>
         <div id="popupContent"></div>
     </div>
 
     <script>
-        // Password protection
         const ADMIN_PASSWORD = 'slsprun_2026';
         let isAuthenticated = false;
         
-        // Erste Group Route
         const ersteRoute = [
-            { 
-                city: "Bratislava", 
-                country: "Slovensko", 
-                flag: "🇸🇰", 
-                km: 0,
-                mapX: 30,
-                mapY: 38,
-                runFact: "Bratislavský maratón je najstarší na Slovensku (od 2006)",
-                ersteFact: "Slovenská sporiteľňa je súčasťou Erste Group od roku 2001"
-            },
-            { 
-                city: "Budapešť", 
-                country: "Maďarsko", 
-                flag: "🇭🇺", 
-                km: 200,
-                mapX: 38,
-                mapY: 50,
-                runFact: "Budapeštianksy maratón vedie popri Dunaji s výhľadom na parlament",
-                ersteFact: "Erste Bank Hungary pôsobí v krajine od roku 1997"
-            },
-            { 
-                city: "Bukurešť", 
-                country: "Rumunsko", 
-                flag: "🇷🇴", 
-                km: 1040,
-                mapX: 88,
-                mapY: 92,
-                runFact: "Bukurešťský polmaratón je jeden z najrýchlejšie rastúcich behov v regióne",
-                ersteFact: "Banca Comercială Română je najväčšia banka v Rumunsku"
-            },
-            { 
-                city: "Belehrad", 
-                country: "Srbsko", 
-                flag: "🇷🇸", 
-                km: 1670,
-                mapX: 50,
-                mapY: 84,
-                runFact: "Belehradský maratón prechádza cez historické pevnosti",
-                ersteFact: "Erste Bank Serbia podporuje digitálne bankovníctvo od roku 2005"
-            },
-            { 
-                city: "Záhreb", 
-                country: "Chorvátsko", 
-                flag: "🇭🇷", 
-                km: 2070,
-                mapX: 18,
-                mapY: 72,
-                runFact: "Záhrebský maratón vedie cez malebné parky a historické centrum",
-                ersteFact: "Erste&Steiermärkische Bank pôsobí v Chorvátsku od roku 2003"
-            },
-            { 
-                city: "Viedeň", 
-                country: "Rakúsko", 
-                flag: "🇦🇹", 
-                km: 2450,
-                mapX: 22,
-                mapY: 38,
-                runFact: "Viedenský mestský maratón je jeden z najrýchlejších v Európe",
-                ersteFact: "Erste Group má sídlo vo Viedni a pôsobí od roku 1819"
-            },
-            { 
-                city: "Praha", 
-                country: "Česko", 
-                flag: "🇨🇿", 
-                km: 2780,
-                mapX: 8,
-                mapY: 10,
-                runFact: "Pražský maratón je považovaný za jeden z najkrajších v Európe",
-                ersteFact: "Česká spořitelna je lídrom digitálneho bankovníctva v ČR"
-            },
-            { 
-                city: "Košice", 
-                country: "Slovensko", 
-                flag: "🇸🇰", 
-                km: 3210,
-                mapX: 58,
-                mapY: 32,
-                runFact: "Košický Medzinárodný maratón mieru je najstarší v Európe (od 1924)",
-                ersteFact: "Východoslovenská pobočková síť patrí medzi najsilnejšie v SK"
-            },
-            { 
-                city: "Bratislava", 
-                country: "Slovensko", 
-                flag: "🇸🇰", 
-                km: 3610,
-                mapX: 30,
-                mapY: 38,
-                runFact: "Dokončili sme okruh! 🎉 Bravó!",
-                ersteFact: "Späť v centrále Slovenskej sporiteľne"
-            }
+            { city: "Bratislava", country: "Slovensko", flag: "🇸🇰", km: 0, mapX: 30, mapY: 38, runFact: "Bratislavský maratón je najstarší na Slovensku (od 2006)", ersteFact: "Slovenská sporiteľňa je súčasťou Erste Group od roku 2001" },
+            { city: "Budapešť", country: "Maďarsko", flag: "🇭🇺", km: 184, mapX: 38, mapY: 50, runFact: "Budapeštianksy maratón vedie popri Dunaji s výhľadom na parlament", ersteFact: "Erste Bank pôsobí v krajine od roku 1997" },
+            { city: "Bukurešť", country: "Rumunsko", flag: "🇷🇴", km: 951, mapX: 88, mapY: 92, runFact: "Bukurešťský polmaratón je jeden z najrýchlejšie rastúcich behov v regióne", ersteFact: "Banca Comercială Română je najväčšia banka v Rumunsku" },
+            { city: "Belehrad", country: "Srbsko", flag: "🇷🇸", km: 1528, mapX: 50, mapY: 84, runFact: "Belehradský maratón prechádza cez historické pevnosti", ersteFact: "Erste Bank podporuje digitálne bankovníctvo od roku 2005" },
+            { city: "Záhreb", country: "Chorvátsko", flag: "🇭🇷", km: 1951, mapX: 18, mapY: 72, runFact: "Záhrebský maratón vedie cez malebné parky a historické centrum", ersteFact: "Erste&Steiermärkische Bank pôsobí v Chorvátsku od roku 2003" },
+            { city: "Viedeň", country: "Rakúsko", flag: "🇦🇹", km: 2266, mapX: 22, mapY: 38, runFact: "Viedenský mestský maratón je jeden z najrýchlejších v Európe", ersteFact: "Erste Group má sídlo vo Viedni a pôsobí od roku 1819" },
+            { city: "Praha", country: "Česko", flag: "🇨🇿", km: 2553, mapX: 8, mapY: 10, runFact: "Pražský maratón je považovaný za jeden z najkrajších v Európe", ersteFact: "Česká spořitelna je lídrom digitálneho bankovníctva" },
+            { city: "Krakov", country: "Poľsko", flag: "🇵🇱", km: 3005, mapX: 28, mapY: 8, runFact: "Krakovský maratón prechádza historickým centrom s výhľadom na hrad Wawel", ersteFact: "Erste Group expanduje v strednej Európe" },
+            { city: "Košice", country: "Slovensko", flag: "🇸🇰", km: 3223, mapX: 58, mapY: 32, runFact: "Košický Medzinárodný maratón mieru je najstarší v Európe (od 1924)", ersteFact: "Východoslovenská pobočková síť patrí medzi najsilnejšie" },
+            { city: "Bratislava", country: "Slovensko", flag: "🇸🇰", km: 3603, mapX: 30, mapY: 38, runFact: "Dokončili sme okruh! 🎉 Bravó!", ersteFact: "Späť v centrále Slovenskej sporiteľne" }
         ];
         
-        const totalRouteKm = 3610;
+        const totalRouteKm = 3603;
+        const raceDate = new Date('2026-08-15T00:00:00');
+        let data = JSON.parse(localStorage.getItem('slspRunRiseData') || '{"runners":0,"kilometers":0,"lastUpdated":null}');
         
-        // Data storage
-        let data = JSON.parse(localStorage.getItem('slspRunRiseData') || JSON.stringify({
-            runners: 0,
-            kilometers: 0,
-            lastUpdated: null
-        }));
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => { 
             updateDisplay();
             loadFormData();
+            updateCountdown();
+            setInterval(updateCountdown, 60000);
         });
+        
+        function updateCountdown() {
+            const now = new Date();
+            const diff = raceDate - now;
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('countdownDays').textContent = days > 0 ? days : 0;
+        }
         
         function toggleAdmin() {
             const login = document.getElementById('adminLogin');
             const form = document.getElementById('adminForm');
-            
             if (isAuthenticated) {
                 form.classList.toggle('active');
                 login.classList.remove('active');
@@ -785,7 +494,6 @@
         function checkPassword() {
             const password = document.getElementById('adminPassword').value;
             const errorMsg = document.getElementById('errorMessage');
-            
             if (password === ADMIN_PASSWORD) {
                 isAuthenticated = true;
                 document.getElementById('adminLogin').classList.remove('active');
@@ -794,9 +502,7 @@
                 errorMsg.textContent = '';
             } else {
                 errorMsg.textContent = '❌ Nesprávne heslo!';
-                setTimeout(() => {
-                    errorMsg.textContent = '';
-                }, 3000);
+                setTimeout(() => errorMsg.textContent = '', 3000);
             }
         }
         
@@ -809,115 +515,75 @@
             data.runners = parseInt(document.getElementById('inputRunners').value) || 0;
             data.kilometers = parseFloat(document.getElementById('inputKm').value) || 0;
             data.lastUpdated = new Date().toISOString();
-            
             localStorage.setItem('slspRunRiseData', JSON.stringify(data));
-            
             updateDisplay();
-            
             document.getElementById('adminForm').classList.remove('active');
-            
             alert('✅ Údaje boli úspešne aktualizované!');
         }
         
         function updateDisplay() {
-            // Update main stats
             document.getElementById('totalRunners').textContent = data.runners;
             document.getElementById('totalKm').textContent = data.kilometers.toFixed(1);
-            
-            const totalEuro = Math.floor(data.kilometers);
-            document.getElementById('totalEuro').textContent = totalEuro + '€';
-            
-            // Update route
             updateErsteRoute();
-            
-            // Last updated
-            const lastUpdatedElement = document.getElementById('lastUpdated');
             if (data.lastUpdated) {
                 const date = new Date(data.lastUpdated);
-                lastUpdatedElement.textContent = `Posledná aktualizácia: ${date.toLocaleDateString('sk-SK')} o ${date.toLocaleTimeString('sk-SK')}`;
+                document.getElementById('lastUpdated').textContent = `Posledná aktualizácia: ${date.toLocaleDateString('sk-SK')} o ${date.toLocaleTimeString('sk-SK')}`;
             }
         }
         
         function updateErsteRoute() {
             const currentKm = data.kilometers;
             const progressPercent = Math.min((currentKm / totalRouteKm) * 100, 100);
-            
             document.getElementById('routeKm').textContent = currentKm.toFixed(1) + ' km';
             document.getElementById('routePercent').textContent = progressPercent.toFixed(1) + '%';
             
-            // Find current position
-            let currentCityIndex = 0;
-            let visitedCities = 0;
-            
+            let currentCityIndex = 0, visitedCities = 0;
             for (let i = 0; i < ersteRoute.length; i++) {
                 if (currentKm >= ersteRoute[i].km) {
                     currentCityIndex = i;
-                    if (i < ersteRoute.length - 1) visitedCities = i + 1;
-                    else visitedCities = 8;
+                    visitedCities = i < ersteRoute.length - 1 ? i + 1 : 9;
                 }
             }
-            
-            document.getElementById('routeCities').textContent = Math.min(visitedCities, 8) + '/8';
-            
-            // Update map markers
+            document.getElementById('routeCities').textContent = Math.min(visitedCities, 9) + '/9';
             updateMapMarkers(currentKm, currentCityIndex);
             
-            // Update current location
             const currentCity = ersteRoute[currentCityIndex];
             const nextCity = ersteRoute[currentCityIndex + 1];
-            
             if (currentKm >= totalRouteKm) {
                 document.getElementById('currentLocationText').textContent = '🎉 Okruh dokončený! Gratulujeme!';
                 document.getElementById('nextCheckpoint').style.display = 'none';
             } else if (nextCity) {
                 const kmToNext = nextCity.km - currentKm;
-                document.getElementById('currentLocationText').textContent = 
-                    `Na ceste medzi ${currentCity.flag} ${currentCity.city} a ${nextCity.flag} ${nextCity.city}`;
-                document.getElementById('nextCheckpointText').textContent = 
-                    `${nextCity.flag} ${nextCity.city} - ešte ${kmToNext.toFixed(1)} km`;
+                document.getElementById('currentLocationText').textContent = `Na ceste medzi ${currentCity.city} a ${nextCity.city}`;
+                document.getElementById('nextCheckpointText').textContent = `${nextCity.city} - ešte ${kmToNext.toFixed(1)} km`;
             }
             
-            // Update cities grid
-            const uniqueCities = ersteRoute.slice(0, -1);
             const citiesGrid = document.getElementById('citiesGrid');
-            citiesGrid.innerHTML = uniqueCities.map((city, index) => {
-                let status = 'locked';
-                let statusIcon = '🔒';
-                
-                if (currentKm >= city.km) {
-                    status = 'completed';
-                    statusIcon = '✅';
-                } else {
+            citiesGrid.innerHTML = ersteRoute.slice(0, -1).map((city, index) => {
+                let status = 'locked', statusIcon = '🔒';
+                if (currentKm >= city.km) { status = 'completed'; statusIcon = '✅'; }
+                else {
                     const nextTarget = ersteRoute.find(c => c.km > currentKm);
                     if (nextTarget && nextTarget.city === city.city && nextTarget.km === city.km) {
-                        status = 'current';
-                        statusIcon = '🎯';
+                        status = 'current'; statusIcon = '🎯';
                     }
                 }
-                
-                return `
-                    <div class="city-card ${status}" onclick="showCityInfo(${index})">
-                        <div class="city-flag">${city.flag}</div>
-                        <div class="city-name">${city.city}</div>
-                        <div class="city-distance">${city.km} km</div>
-                        <div class="city-status">${statusIcon}</div>
-                    </div>
-                `;
+                return `<div class="city-card ${status}" onclick="showCityInfo(${index})">
+                    <div class="city-flag">${city.flag}</div>
+                    <div class="city-name">${city.city}</div>
+                    <div class="city-distance">${city.km} km</div>
+                    <div class="city-status">${statusIcon}</div>
+                </div>`;
             }).join('');
         }
         
         function updateMapMarkers(currentKm, currentCityIndex) {
             const overlay = document.getElementById('mapOverlay');
             overlay.innerHTML = '';
-            
             ersteRoute.slice(0, -1).forEach((city, index) => {
                 let markerClass = 'locked';
-                
-                if (currentKm >= city.km) {
-                    markerClass = 'completed';
-                } else if (index === currentCityIndex + 1) {
-                    markerClass = 'current';
-                }
+                if (currentKm >= city.km) markerClass = 'completed';
+                else if (index === currentCityIndex + 1) markerClass = 'current';
                 
                 const marker = document.createElement('div');
                 marker.className = `city-marker ${markerClass}`;
@@ -925,77 +591,36 @@
                 marker.style.top = city.mapY + '%';
                 marker.innerHTML = city.flag;
                 marker.onclick = () => showCityInfo(index);
-                
                 overlay.appendChild(marker);
             });
         }
         
         function showCityInfo(index) {
             const city = ersteRoute[index];
-            const popup = document.getElementById('cityInfoPopup');
-            const overlay = document.getElementById('popupOverlay');
-            
             document.getElementById('popupContent').innerHTML = `
-                <div class="city-info-title">${city.flag} ${city.city}, ${city.country}</div>
-                <div class="city-info-section">
-                    <div class="city-info-label">🏃‍♂️ Bežecký fakt:</div>
-                    <div class="city-info-text">${city.runFact}</div>
+                <div class="popup-title">${city.flag} ${city.city}, ${city.country}</div>
+                <div class="popup-section">
+                    <div class="popup-label">🏃‍♀️ Bežecký fakt:</div>
+                    <div class="popup-text">${city.runFact}</div>
                 </div>
-                <div class="city-info-section">
-                    <div class="city-info-label">🏦 Erste Bank fakt:</div>
-                    <div class="city-info-text">${city.ersteFact}</div>
+                <div class="popup-section">
+                    <div class="popup-label">🏦 Erste Bank fakt:</div>
+                    <div class="popup-text">${city.ersteFact}</div>
                 </div>
-                <div class="city-info-section">
-                    <div class="city-info-label">📍 Vzdialenosť od štartu:</div>
-                    <div class="city-info-text">${city.km} km</div>
+                <div class="popup-section">
+                    <div class="popup-label">📍 Vzdialenosť od štartu:</div>
+                    <div class="popup-text">${city.km} km</div>
                 </div>
             `;
-            
-            popup.classList.add('show');
-            overlay.classList.add('show');
+            document.getElementById('cityPopup').classList.add('show');
+            document.getElementById('popupOverlay').classList.add('show');
         }
         
         function closePopup() {
-            document.getElementById('cityInfoPopup').classList.remove('show');
+            document.getElementById('cityPopup').classList.remove('show');
             document.getElementById('popupOverlay').classList.remove('show');
         }
         
-        // Animation on load
-        setTimeout(() => {
-            if (data.runners > 0 || data.kilometers > 0) {
-                animateNumbers();
-            }
-        }, 500);
-        
-        function animateNumbers() {
-            animateValue('totalRunners', 0, data.runners, 1500);
-            animateValue('totalKm', 0, data.kilometers, 1500, true);
-        }
-        
-        function animateValue(id, start, end, duration, isDecimal = false) {
-            const element = document.getElementById(id);
-            const range = end - start;
-            const increment = range / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-                    current = end;
-                    clearInterval(timer);
-                }
-                
-                if (isDecimal) {
-                    element.textContent = current.toFixed(1);
-                } else if (id === 'totalEuro') {
-                    element.textContent = Math.floor(current) + '€';
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, 16);
-        }
-        
-        // Allow Enter key for password
         document.addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && document.getElementById('adminLogin').classList.contains('active')) {
                 checkPassword();
