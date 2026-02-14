@@ -453,7 +453,7 @@ async function loadLeaderboard() {
 
 async function loadParticipants() {
     try {
-        const r = await fetch('data_participants.csv');
+        const r = await fetch('data_winners_participants.csv');
         if (!r.ok) throw new Error('no file');
         const text  = await r.text();
         const lines = text.split('\n');
