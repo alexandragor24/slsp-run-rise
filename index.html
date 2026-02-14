@@ -53,8 +53,11 @@
         .leader-name { flex: 1; font-weight: 600; color: #1F2937; }
         .leader-value { font-weight: 800; font-size: 1.05em; color: #8B5CF6; }
         .challenges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; margin-top: 25px; }
-        .challenge-card { background: linear-gradient(135deg, #F9FAFB, #F1F5F9); border-radius: 18px; padding: 26px; border: 2px solid #E2E8F0; transition: all 0.3s; cursor: pointer; }
-        .challenge-card:hover { border-color: #8B5CF6; box-shadow: 0 8px 25px rgba(139,92,246,0.2); transform: translateY(-3px); }
+        .challenge-card { background: linear-gradient(135deg, #F9FAFB, #F1F5F9); border-radius: 18px; padding: 26px; border: 2px solid #E2E8F0; transition: all 0.3s; cursor: pointer; position: relative; }
+        .challenge-card:hover:not(.locked-challenge) { border-color: #8B5CF6; box-shadow: 0 8px 25px rgba(139,92,246,0.2); transform: translateY(-3px); }
+        .challenge-card.locked-challenge { opacity: 0.5; cursor: not-allowed; filter: grayscale(0.3); }
+        .challenge-lock-badge { position: absolute; top: 12px; right: 12px; font-size: 1.3em; }
+        .challenge-open-date { font-size: 0.78em; color: #94A3B8; font-weight: 600; margin-top: 8px; }
         .challenge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .challenge-month { font-size: 0.82em; color: #8B5CF6; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: #EDE9FE; padding: 4px 10px; border-radius: 20px; }
         .challenge-type { font-size: 0.78em; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
@@ -80,9 +83,11 @@
         .city-popup-section { margin-bottom: 14px; }
         .city-popup-label { font-weight: 700; color: #8B5CF6; font-size: 0.9em; margin-bottom: 5px; }
         .city-popup-text { color: #475569; font-size: 0.95em; line-height: 1.6; }
-        .journey-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin: 25px 0; }
+        .journey-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin: 25px 0; }
         .journey-stat { background: #F9FAFB; padding: 20px; border-radius: 14px; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
+        .journey-stat.lap-stat { background: linear-gradient(135deg, #EDE9FE, #DDD6FE); border: 2px solid #8B5CF6; }
         .journey-stat-number { font-size: 1.9em; font-weight: 800; color: #8B5CF6; }
+        .journey-stat.lap-stat .journey-stat-number { color: #6B21A8; }
         .journey-stat-label { color: #64748B; font-size: 0.88em; margin-top: 6px; font-weight: 600; }
         .journey-location { background: linear-gradient(135deg, #FEF3C7, #FDE68A); border: 2px solid #F59E0B; padding: 20px; border-radius: 14px; margin: 22px 0; text-align: center; }
         .journey-location-title { font-size: 1.2em; font-weight: 800; color: #92400E; margin-bottom: 8px; }
@@ -105,11 +110,14 @@
         .city-card.completed { background: linear-gradient(135deg, #10B981, #059669); color: white; }
         .city-card.current { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; animation: cardPulse 2.5s infinite; }
         .city-card.locked { opacity: 0.4; }
+        .city-card.finish { background: linear-gradient(135deg, #8B5CF6, #6D28D9); color: white; border: 3px solid #F59E0B; }
         @keyframes cardPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
         .city-flag { font-size: 2em; margin-bottom: 7px; }
         .city-name { font-weight: 800; font-size: 0.95em; margin-bottom: 3px; }
+        .city-km-label { font-size: 0.72em; opacity: 0.75; font-weight: 500; margin-bottom: 1px; }
         .city-distance { font-size: 0.8em; opacity: 0.8; font-weight: 600; }
         .city-status { margin-top: 7px; font-size: 1.1em; }
+        .lap-badge { display: inline-block; background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.5); border-radius: 20px; padding: 2px 8px; font-size: 0.7em; font-weight: 700; margin-top: 4px; }
         .spin-btn { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; border: none; padding: 14px 38px; border-radius: 14px; font-size: 1.15em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 15px; }
         .spin-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(245,158,11,0.4); }
         .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
@@ -123,7 +131,7 @@
             .nav-container { flex-direction: column; align-items: center; }
             .nav-menu { justify-content: center; }
             .stats-grid, .leaderboard-grid, .challenges-grid { grid-template-columns: 1fr; }
-            .journey-stats { grid-template-columns: 1fr; }
+            .journey-stats { grid-template-columns: repeat(2,1fr); }
             .section { padding: 28px 18px; }
             .cities-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
         }
@@ -214,15 +222,19 @@
         <div class="journey-stats">
             <div class="journey-stat">
                 <div class="journey-stat-number" id="journeyKm">0 km</div>
-                <div class="journey-stat-label">Nabehaných km</div>
+                <div class="journey-stat-label">Celkových km</div>
             </div>
             <div class="journey-stat">
                 <div class="journey-stat-number" id="journeyPercent">0%</div>
-                <div class="journey-stat-label">Dokončené</div>
+                <div class="journey-stat-label">Dokončené (akt. kolo)</div>
             </div>
             <div class="journey-stat">
                 <div class="journey-stat-number" id="journeyCities">0/8</div>
-                <div class="journey-stat-label">Krajiny</div>
+                <div class="journey-stat-label">Krajiny (akt. kolo)</div>
+            </div>
+            <div class="journey-stat lap-stat">
+                <div class="journey-stat-number" id="journeyLap">1. kolo</div>
+                <div class="journey-stat-label">🔄 Aktuálne kolo</div>
             </div>
         </div>
         <div class="journey-location">
@@ -283,6 +295,24 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+// ============================================================
+// Mesiac → číslo (1-12) pre porovnanie s aktuálnym dátumom
+// ============================================================
+var monthMap = {
+    'Marec': 3, 'Apríl': 4, 'Máj': 5, 'Jún': 6,
+    'Júl': 7, 'August': 8, 'September': 9
+};
+
+function isChallengeOpen(c) {
+    var now   = new Date();
+    var year  = now.getFullYear();
+    var month = now.getMonth() + 1; // 1-12
+    var openMonth = monthMap[c.month] || 1;
+    // Otvára sa 1. deň daného mesiaca roku 2026
+    var openDate = new Date(2026, openMonth - 1, 1);
+    return now >= openDate;
+}
+
 var challenges = [
     { month:'Marec',     type:'Tematicka',  label:'Tematická',  title:'Fresh Start Challenge',     desc:'10 dní s aktivitou (beh/chôdza > 20 min) + fotka z obľúbeného miesta',               csvFile:'participants_marec_thematic.csv' },
     { month:'Marec',     type:'Vykonova',   label:'Výkonová',   title:'Base Builder',              desc:'Odbehni 50 km za mesiac alebo min. 8 behov (25–45 min) + fotka z obľúbeného miesta', csvFile:'participants_marec_performance.csv' },
@@ -326,6 +356,14 @@ var ersteRoute = [
       runFact:'Maraton mieru 1979 meral iba 40,6 km. Dnes je plnohodnotnym maratorom.',
       ersteFact:'Erste Group expanduje na polskom trhu v strednej Europe' }
 ];
+
+// Bratislava CIEĽ — zobrazená v kachliciach ako posledná, nie na mape
+var finishCity = {
+    city:'Bratislava', country:'Slovensko', flag:'🇸🇰', km:3740,
+    isFinish: true,
+    runFact:'Vitaj späť doma! Celý okruh Erste Group — 3 740 km — dokončený. Gratulujeme!',
+    ersteFact:'Slovenská sporiteľňa je domovom projektu Run & Rise.'
+};
 
 var challengeWinners      = {};
 var isSpinning            = false;
@@ -424,17 +462,36 @@ async function loadChallengeWinners() {
     } catch(e) { challengeWinners = {}; }
 }
 
+// ============================================================
+// VÝZVY — s postupným odkrývaním podľa mesiaca
+// ============================================================
 function renderChallenges() {
     document.getElementById('challengesGrid').innerHTML = challenges.map(function(c, i) {
         var typeClass = (c.type === 'Tematicka') ? 'thematic' : 'performance';
-        return '<div class="challenge-card" onclick="openWinnersPopup(' + i + ')">' +
-            '<div class="challenge-header">' +
-            '<span class="challenge-month">' + c.month + '</span>' +
-            '<span class="challenge-type ' + typeClass + '">' + c.label + '</span>' +
-            '</div>' +
-            '<div class="challenge-title">' + c.title + '</div>' +
-            '<div class="challenge-desc">' + c.desc + '</div>' +
-            '</div>';
+        var open = isChallengeOpen(c);
+        var openMonth = monthMap[c.month] || 1;
+        var openDateStr = '1. ' + c.month + ' 2026';
+
+        if (open) {
+            return '<div class="challenge-card" onclick="openWinnersPopup(' + i + ')">' +
+                '<div class="challenge-header">' +
+                '<span class="challenge-month">' + c.month + '</span>' +
+                '<span class="challenge-type ' + typeClass + '">' + c.label + '</span>' +
+                '</div>' +
+                '<div class="challenge-title">' + c.title + '</div>' +
+                '<div class="challenge-desc">' + c.desc + '</div>' +
+                '</div>';
+        } else {
+            return '<div class="challenge-card locked-challenge">' +
+                '<div class="challenge-lock-badge">🔒</div>' +
+                '<div class="challenge-header">' +
+                '<span class="challenge-month">' + c.month + '</span>' +
+                '<span class="challenge-type ' + typeClass + '">' + c.label + '</span>' +
+                '</div>' +
+                '<div class="challenge-title">' + c.title + '</div>' +
+                '<div class="challenge-open-date">Otvára sa ' + openDateStr + '</div>' +
+                '</div>';
+        }
     }).join('');
 }
 
@@ -518,7 +575,7 @@ function spinChallengeRoulette() {
         btn.disabled = false;
         setTimeout(function() {
             var ch = challenges[currentChallengeIndex];
-            var confirmed = confirm('🎉 VÍŤAZKA:\n' + winner + '\n\nUložiť výsledok?');
+            var confirmed = confirm('VITAZKA:\n' + winner + '\n\nUlozit vysledok?');
             if (confirmed) {
                 alert('Pridajte do data_challenge_winners.json:\n\n"' + ch.month + ' - ' + ch.title + '": ["' + winner + '"]');
             }
@@ -531,40 +588,70 @@ function closeWinnersPopup() {
     document.getElementById('winnersOverlay').classList.remove('show');
 }
 
-function countCountries() {
-    var km        = statsData.kilometers;
+// ============================================================
+// JOURNEY — s podporou viacerých kôl
+// ============================================================
+function getLapInfo(totalKm) {
+    var lap      = Math.floor(totalKm / TOTAL_KM) + 1;  // aktuálne kolo (1-based)
+    var kmInLap  = totalKm % TOTAL_KM;                   // km v aktuálnom kole
+    var completed = Math.floor(totalKm / TOTAL_KM);      // dokončené celé kolá
+    return { lap: lap, kmInLap: kmInLap, completed: completed };
+}
+
+function getLapLabel(n) {
+    if (n === 1) return '1. kolo';
+    if (n === 2) return '2. kolo';
+    if (n === 3) return '3. kolo';
+    return n + '. kolo';
+}
+
+function countCountries(kmInLap) {
     var countries = new Set();
-    ersteRoute.forEach(function(city) { if (km >= city.km) countries.add(city.country); });
+    ersteRoute.forEach(function(city) { if (kmInLap >= city.km) countries.add(city.country); });
     return Math.min(countries.size, 8);
 }
 
 function updateJourney() {
-    var km  = statsData.kilometers;
-    var pct = Math.min((km / TOTAL_KM) * 100, 100);
-    document.getElementById('journeyKm').textContent      = km.toFixed(1) + ' km';
+    var totalKm  = statsData.kilometers;
+    var info     = getLapInfo(totalKm);
+    var kmInLap  = info.kmInLap;
+    var lap      = info.lap;
+    var pct      = Math.min((kmInLap / TOTAL_KM) * 100, 100);
+
+    document.getElementById('journeyKm').textContent      = totalKm.toFixed(1) + ' km';
     document.getElementById('journeyPercent').textContent  = pct.toFixed(1) + '%';
-    document.getElementById('journeyCities').textContent   = countCountries() + '/8';
+    document.getElementById('journeyCities').textContent   = countCountries(kmInLap) + '/8';
+    document.getElementById('journeyLap').textContent      = getLapLabel(lap);
+
+    // Ak je dokončených viac ako 0 kôl, zobrazíme info
+    var lapSuffix = info.completed > 0 ? ' (kolo ' + lap + ')' : '';
 
     var curIdx = 0;
     for (var i = 0; i < ersteRoute.length; i++) {
-        if (km >= ersteRoute[i].km) curIdx = i;
+        if (kmInLap >= ersteRoute[i].km) curIdx = i;
     }
     var cur  = ersteRoute[curIdx];
     var next = ersteRoute[curIdx + 1];
 
-    if (km >= TOTAL_KM) {
-        document.getElementById('journeyLocationText').textContent = 'Okruh dokončený! Gratulujeme!';
-        document.getElementById('journeyNext').style.display = 'none';
+    if (kmInLap >= TOTAL_KM || kmInLap === 0 && lap > 1) {
+        document.getElementById('journeyLocationText').textContent = getLapLabel(lap) + ' — Štart v Bratislave!';
+        document.getElementById('journeyNextText').textContent     = 'Budapešť — este 184 km';
+        document.getElementById('journeyNext').style.display = 'block';
     } else if (next) {
-        document.getElementById('journeyLocationText').textContent = 'Na ceste medzi ' + cur.city + ' a ' + next.city;
-        document.getElementById('journeyNextText').textContent     = next.city + ' — ešte ' + (next.km - km).toFixed(1) + ' km';
+        document.getElementById('journeyLocationText').textContent = 'Na ceste medzi ' + cur.city + ' a ' + next.city + lapSuffix;
+        document.getElementById('journeyNextText').textContent     = next.city + ' — este ' + (next.km - kmInLap).toFixed(1) + ' km';
+        document.getElementById('journeyNext').style.display = 'block';
+    } else {
+        document.getElementById('journeyLocationText').textContent = 'V ' + cur.city + lapSuffix;
+        document.getElementById('journeyNext').style.display = 'none';
     }
 
+    // Mapa — markery podľa kmInLap
     var overlay = document.getElementById('journeyMapOverlay');
     overlay.innerHTML = '';
     ersteRoute.forEach(function(city, idx) {
         var cls = 'locked';
-        if (km >= city.km)         cls = 'completed';
+        if (kmInLap >= city.km)    cls = 'completed';
         else if (idx === curIdx+1) cls = 'current';
         var m = document.createElement('div');
         m.className  = 'city-marker ' + cls;
@@ -576,20 +663,42 @@ function updateJourney() {
         overlay.appendChild(m);
     });
 
-    document.getElementById('citiesGrid').innerHTML = ersteRoute.map(function(city, idx) {
+    // Kachlicky — 8 miest + Bratislava CIEĽ na konci
+    var allCards = ersteRoute.map(function(city, idx) {
         var status = 'locked', icon = '🔒';
-        if (km >= city.km) { status = 'completed'; icon = '✅'; }
+        if (kmInLap >= city.km) { status = 'completed'; icon = '✅'; }
         else {
-            var nt = ersteRoute.find(function(c) { return c.km > km; });
-            if (nt && nt.city === city.city && nt.km === city.km) { status = 'current'; icon = '🎯'; }
+            var nt = ersteRoute.find(function(c) { return c.km > kmInLap; });
+            if (nt && nt.city === city.city) { status = 'current'; icon = '🎯'; }
         }
+        var lapBadge = (info.completed > 0 && status === 'completed')
+            ? '<div class="lap-badge">x' + lap + '</div>' : '';
         return '<div class="city-card ' + status + '" onclick="openCityPopup(' + idx + ')">' +
             '<div class="city-flag">' + city.flag + '</div>' +
             '<div class="city-name">' + city.city + '</div>' +
+            '<div class="city-km-label">od štartu</div>' +
             '<div class="city-distance">' + city.km + ' km</div>' +
             '<div class="city-status">' + icon + '</div>' +
+            lapBadge +
             '</div>';
-    }).join('');
+    });
+
+    // Finish kachlička — Bratislava cieľ
+    var finishStatus = (kmInLap >= TOTAL_KM || info.completed > 0) ? 'finish' : 'locked';
+    var finishIcon   = (kmInLap >= TOTAL_KM || info.completed > 0) ? '🏁' : '🔒';
+    var finishLap    = info.completed > 0 ? '<div class="lap-badge">x' + info.completed + ' kolo</div>' : '';
+    allCards.push(
+        '<div class="city-card ' + finishStatus + '" onclick="openFinishPopup()">' +
+        '<div class="city-flag">🇸🇰</div>' +
+        '<div class="city-name">Bratislava</div>' +
+        '<div class="city-km-label">cieľ okruhu</div>' +
+        '<div class="city-distance">3 740 km</div>' +
+        '<div class="city-status">' + finishIcon + '</div>' +
+        finishLap +
+        '</div>'
+    );
+
+    document.getElementById('citiesGrid').innerHTML = allCards.join('');
 }
 
 function openCityPopup(i) {
@@ -602,6 +711,23 @@ function openCityPopup(i) {
         '<div class="city-popup-text">' + c.ersteFact + '</div></div>' +
         '<div class="city-popup-section"><div class="city-popup-label">📍 Vzdialenosť od štartu:</div>' +
         '<div class="city-popup-text">' + c.km + ' km</div></div>';
+    document.getElementById('cityPopup').classList.add('show');
+    document.getElementById('cityOverlay').classList.add('show');
+}
+
+function openFinishPopup() {
+    var info = getLapInfo(statsData.kilometers);
+    var laps = info.completed;
+    document.getElementById('cityPopupContent').innerHTML =
+        '<div class="city-popup-title">🏁 🇸🇰 Bratislava — Cieľ okruhu</div>' +
+        '<div class="city-popup-section"><div class="city-popup-label">🔄 Dokončené kolá:</div>' +
+        '<div class="city-popup-text">' + (laps > 0 ? laps + ' x 3 740 km' : 'Okruh ešte nie je dokončený') + '</div></div>' +
+        '<div class="city-popup-section"><div class="city-popup-label">🏃 Fakt:</div>' +
+        '<div class="city-popup-text">' + finishCity.runFact + '</div></div>' +
+        '<div class="city-popup-section"><div class="city-popup-label">🏦 Erste Bank fakt:</div>' +
+        '<div class="city-popup-text">' + finishCity.ersteFact + '</div></div>' +
+        '<div class="city-popup-section"><div class="city-popup-label">📍 Vzdialenosť okruhu:</div>' +
+        '<div class="city-popup-text">3 740 km</div></div>';
     document.getElementById('cityPopup').classList.add('show');
     document.getElementById('cityOverlay').classList.add('show');
 }
