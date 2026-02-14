@@ -6,303 +6,124 @@
     <title>SLSP Run & Rise</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #3B82F6 100%);
-            min-height: 100vh;
-        }
-
-        .navbar {
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px; margin: 0 auto;
-            padding: 18px 30px;
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 15px;
-        }
-
-        .logo {
-            font-size: 1.8em; font-weight: 800;
-            background: linear-gradient(135deg, #8B5CF6, #3B82F6);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #3B82F6 100%); min-height: 100vh; }
+        .navbar { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 18px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo { font-size: 1.8em; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #3B82F6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-menu { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; }
-
-        .nav-item {
-            padding: 10px 18px; border-radius: 10px; cursor: pointer;
-            font-weight: 600; transition: all 0.3s; color: #64748B; user-select: none;
-        }
+        .nav-item { padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: all 0.3s; color: #64748B; user-select: none; }
         .nav-item:hover { background: #F1F5F9; color: #8B5CF6; }
         .nav-item.active { background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; }
-
         .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-
-        .section {
-            display: none; background: white; border-radius: 25px;
-            padding: 50px; box-shadow: 0 25px 60px rgba(0,0,0,0.2); animation: fadeIn 0.4s;
-        }
+        .section { display: none; background: white; border-radius: 25px; padding: 50px; box-shadow: 0 25px 60px rgba(0,0,0,0.2); animation: fadeIn 0.4s; }
         .section.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-title {
-            font-size: 2.4em; font-weight: 800; margin-bottom: 10px;
-            background: linear-gradient(135deg, #8B5CF6, #3B82F6);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .section-title { font-size: 2.4em; font-weight: 800; margin-bottom: 10px; background: linear-gradient(135deg, #8B5CF6, #3B82F6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .section-subtitle { color: #64748B; font-size: 1.1em; margin-bottom: 30px; }
-
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px; margin-top: 40px;
-        }
-
-        .stat-card {
-            padding: 42px 30px; border-radius: 22px; text-align: center; color: white;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15); transition: all 0.4s ease;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-top: 40px; }
+        .stat-card { padding: 42px 30px; border-radius: 22px; text-align: center; color: white; box-shadow: 0 15px 35px rgba(0,0,0,0.15); transition: all 0.4s ease; }
         .stat-card:hover { transform: translateY(-8px) scale(1.02); }
-        .stat-card.start     { background: linear-gradient(135deg, #10B981, #059669); }
-        .stat-card.love      { background: linear-gradient(135deg, #EC4899, #DB2777); }
+        .stat-card.start { background: linear-gradient(135deg, #10B981, #059669); }
+        .stat-card.love { background: linear-gradient(135deg, #EC4899, #DB2777); }
         .stat-card.countdown { background: linear-gradient(135deg, #F59E0B, #EA580C); }
-
-        .stat-icon-wrapper {
-            width: 75px; height: 75px; margin: 0 auto 18px;
-            background: rgba(255,255,255,0.2); border-radius: 18px;
-            display: flex; align-items: center; justify-content: center; font-size: 2.4em;
-        }
-
+        .stat-icon-wrapper { width: 75px; height: 75px; margin: 0 auto 18px; background: rgba(255,255,255,0.2); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 2.4em; }
         .stat-number { font-size: 3.4em; font-weight: 900; margin-bottom: 8px; }
         .stat-subtitle { opacity: 0.9; font-size: 1.05em; margin-top: 8px; line-height: 1.5; }
         .countdown-time { font-size: 1.5em; font-weight: 800; letter-spacing: 1px; margin-top: 6px; }
-
         .race-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .race-table th {
-            background: linear-gradient(135deg, #8B5CF6, #7C3AED);
-            color: white; padding: 14px 16px; text-align: left; font-weight: 700;
-        }
+        .race-table th { background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; padding: 14px 16px; text-align: left; font-weight: 700; }
         .race-table th:first-child { border-radius: 12px 0 0 0; }
-        .race-table th:last-child  { border-radius: 0 12px 0 0; }
+        .race-table th:last-child { border-radius: 0 12px 0 0; }
         .race-table td { padding: 14px 16px; border-bottom: 1px solid #F1F5F9; color: #374151; }
         .race-table tr:hover td { background: #F8FAFC; }
         .race-table a { color: #8B5CF6; text-decoration: none; font-weight: 600; }
         .race-table a:hover { text-decoration: underline; }
         .race-highlight td { font-weight: 600; background: #FEF3C7 !important; }
         .race-highlight:hover td { background: #FDE68A !important; }
-
-        .leaderboard-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 35px; margin-top: 25px;
-        }
+        .leaderboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 35px; margin-top: 25px; }
         .leaderboard-card { background: #F9FAFB; border-radius: 20px; padding: 28px; }
         .leaderboard-title { font-size: 1.4em; font-weight: 800; margin-bottom: 18px; color: #8B5CF6; }
-
-        .leader-item {
-            display: flex; align-items: center; padding: 12px 14px;
-            background: white; border-radius: 12px; margin-bottom: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06); transition: 0.2s;
-        }
+        .leader-item { display: flex; align-items: center; padding: 12px 14px; background: white; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); transition: 0.2s; }
         .leader-item:hover { transform: translateX(4px); box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
-
-        .leader-rank {
-            width: 38px; height: 38px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 900; font-size: 1.1em; margin-right: 14px; flex-shrink: 0;
-        }
-        .leader-rank.gold   { background: linear-gradient(135deg, #F59E0B, #D97706); color: white; }
+        .leader-rank { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1em; margin-right: 14px; flex-shrink: 0; }
+        .leader-rank.gold { background: linear-gradient(135deg, #F59E0B, #D97706); color: white; }
         .leader-rank.silver { background: linear-gradient(135deg, #94A3B8, #64748B); color: white; }
         .leader-rank.bronze { background: linear-gradient(135deg, #FB923C, #EA580C); color: white; }
-        .leader-rank.other  { background: #E2E8F0; color: #64748B; }
-
-        .leader-name  { flex: 1; font-weight: 600; color: #1F2937; }
+        .leader-rank.other { background: #E2E8F0; color: #64748B; }
+        .leader-name { flex: 1; font-weight: 600; color: #1F2937; }
         .leader-value { font-weight: 800; font-size: 1.05em; color: #8B5CF6; }
-
-        .challenges-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 22px; margin-top: 25px;
-        }
-
-        .challenge-card {
-            background: linear-gradient(135deg, #F9FAFB, #F1F5F9);
-            border-radius: 18px; padding: 26px; border: 2px solid #E2E8F0;
-            transition: all 0.3s; cursor: pointer;
-        }
-        .challenge-card:hover {
-            border-color: #8B5CF6; box-shadow: 0 8px 25px rgba(139,92,246,0.2);
-            transform: translateY(-3px);
-        }
-
+        .challenges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; margin-top: 25px; }
+        .challenge-card { background: linear-gradient(135deg, #F9FAFB, #F1F5F9); border-radius: 18px; padding: 26px; border: 2px solid #E2E8F0; transition: all 0.3s; cursor: pointer; }
+        .challenge-card:hover { border-color: #8B5CF6; box-shadow: 0 8px 25px rgba(139,92,246,0.2); transform: translateY(-3px); }
         .challenge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .challenge-month {
-            font-size: 0.82em; color: #8B5CF6; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 1px;
-            background: #EDE9FE; padding: 4px 10px; border-radius: 20px;
-        }
+        .challenge-month { font-size: 0.82em; color: #8B5CF6; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: #EDE9FE; padding: 4px 10px; border-radius: 20px; }
         .challenge-type { font-size: 0.78em; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
-        .challenge-type.thematic    { background: #DBEAFE; color: #1D4ED8; }
+        .challenge-type.thematic { background: #DBEAFE; color: #1D4ED8; }
         .challenge-type.performance { background: #D1FAE5; color: #065F46; }
         .challenge-title { font-size: 1.2em; font-weight: 800; margin: 10px 0 8px; color: #1F2937; }
-        .challenge-desc  { color: #64748B; line-height: 1.5; font-size: 0.92em; }
-
-        .popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.55); z-index: 999; display: none;
-        }
+        .challenge-desc { color: #64748B; line-height: 1.5; font-size: 0.92em; }
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 999; display: none; }
         .popup-overlay.show { display: block; }
-
-        .popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; border-radius: 22px; padding: 38px;
-            max-width: 440px; width: 90%; z-index: 1000; display: none;
-            border: 3px solid #8B5CF6; box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-        }
+        .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 22px; padding: 38px; max-width: 440px; width: 90%; z-index: 1000; display: none; border: 3px solid #8B5CF6; box-shadow: 0 25px 60px rgba(0,0,0,0.3); }
         .popup.show { display: block; }
-
-        .popup-close {
-            position: absolute; top: 16px; right: 20px;
-            font-size: 26px; cursor: pointer; color: #64748B; transition: 0.2s;
-        }
+        .popup-close { position: absolute; top: 16px; right: 20px; font-size: 26px; cursor: pointer; color: #64748B; transition: 0.2s; }
         .popup-close:hover { color: #1F2937; transform: rotate(90deg); }
-
         .popup-title { font-size: 1.5em; font-weight: 800; color: #1F2937; margin-bottom: 6px; }
         .popup-month { font-size: 0.88em; color: #8B5CF6; font-weight: 600; margin-bottom: 18px; }
-
         .winners-list { list-style: none; }
-        .winners-list li {
-            display: flex; align-items: center; padding: 12px 15px;
-            background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
-            border-radius: 12px; margin-bottom: 8px; font-weight: 600; color: #1F2937;
-        }
+        .winners-list li { display: flex; align-items: center; padding: 12px 15px; background: linear-gradient(135deg, #EDE9FE, #DDD6FE); border-radius: 12px; margin-bottom: 8px; font-weight: 600; color: #1F2937; }
         .winners-list li::before { content: '🏆'; margin-right: 12px; font-size: 1.2em; }
-
         .not-evaluated { text-align: center; padding: 28px 16px; color: #64748B; }
         .not-evaluated .icon { font-size: 2.8em; margin-bottom: 12px; }
-        .not-evaluated p     { font-weight: 600; color: #475569; margin-bottom: 6px; font-size: 1.05em; }
-        .not-evaluated .sub  { font-size: 0.88em; color: #94A3B8; font-weight: 400; }
-
-        .city-popup-title   { font-size: 1.5em; font-weight: 800; color: #1F2937; margin-bottom: 16px; }
+        .not-evaluated p { font-weight: 600; color: #475569; margin-bottom: 6px; font-size: 1.05em; }
+        .not-evaluated .sub { font-size: 0.88em; color: #94A3B8; font-weight: 400; }
+        .city-popup-title { font-size: 1.5em; font-weight: 800; color: #1F2937; margin-bottom: 16px; }
         .city-popup-section { margin-bottom: 14px; }
-        .city-popup-label   { font-weight: 700; color: #8B5CF6; font-size: 0.9em; margin-bottom: 5px; }
-        .city-popup-text    { color: #475569; font-size: 0.95em; line-height: 1.6; }
-
-        .roulette-section {
-            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-            border-radius: 22px; padding: 42px; margin-top: 45px; text-align: center;
-        }
-        .roulette-title    { font-size: 2em; font-weight: 800; color: #92400E; margin-bottom: 8px; }
+        .city-popup-label { font-weight: 700; color: #8B5CF6; font-size: 0.9em; margin-bottom: 5px; }
+        .city-popup-text { color: #475569; font-size: 0.95em; line-height: 1.6; }
+        .roulette-section { background: linear-gradient(135deg, #FEF3C7, #FDE68A); border-radius: 22px; padding: 42px; margin-top: 45px; text-align: center; }
+        .roulette-title { font-size: 2em; font-weight: 800; color: #92400E; margin-bottom: 8px; }
         .roulette-subtitle { color: #78350F; font-size: 1em; margin-bottom: 25px; }
-
-        .roulette-wheel {
-            width: 280px; height: 280px; margin: 25px auto; border-radius: 50%;
-            border: 14px solid #F59E0B; display: flex; align-items: center; justify-content: center;
-            background: white; font-size: 1.4em; font-weight: 800; color: #92400E;
-            box-shadow: 0 10px 30px rgba(245,158,11,0.3);
-        }
+        .roulette-wheel { width: 280px; height: 280px; margin: 25px auto; border-radius: 50%; border: 14px solid #F59E0B; display: flex; align-items: center; justify-content: center; background: white; font-size: 1.4em; font-weight: 800; color: #92400E; box-shadow: 0 10px 30px rgba(245,158,11,0.3); }
         .roulette-wheel.spinning { animation: spin 3s cubic-bezier(0.25,0.1,0.25,1); }
-
-        @keyframes spin {
-            0%   { transform: rotate(0deg); }
-            100% { transform: rotate(1800deg); }
-        }
-
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(1800deg); } }
         .roulette-result { padding: 18px; word-break: break-word; max-width: 220px; }
-
-        .spin-btn {
-            background: linear-gradient(135deg, #F59E0B, #EA580C);
-            color: white; border: none; padding: 14px 38px; border-radius: 14px;
-            font-size: 1.15em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 15px;
-        }
-        .spin-btn:hover    { transform: scale(1.05); box-shadow: 0 8px 25px rgba(245,158,11,0.4); }
+        .spin-btn { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; border: none; padding: 14px 38px; border-radius: 14px; font-size: 1.15em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .spin-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(245,158,11,0.4); }
         .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
         .participants-count { color: #78350F; font-weight: 600; margin-top: 12px; }
-
-        .journey-stats {
-            display: grid; grid-template-columns: repeat(3,1fr);
-            gap: 18px; margin: 25px 0;
-        }
-        .journey-stat {
-            background: #F9FAFB; padding: 20px; border-radius: 14px;
-            text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.06);
-        }
+        .journey-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin: 25px 0; }
+        .journey-stat { background: #F9FAFB; padding: 20px; border-radius: 14px; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
         .journey-stat-number { font-size: 1.9em; font-weight: 800; color: #8B5CF6; }
-        .journey-stat-label  { color: #64748B; font-size: 0.88em; margin-top: 6px; font-weight: 600; }
-
-        .journey-location {
-            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-            border: 2px solid #F59E0B; padding: 20px; border-radius: 14px;
-            margin: 22px 0; text-align: center;
-        }
+        .journey-stat-label { color: #64748B; font-size: 0.88em; margin-top: 6px; font-weight: 600; }
+        .journey-location { background: linear-gradient(135deg, #FEF3C7, #FDE68A); border: 2px solid #F59E0B; padding: 20px; border-radius: 14px; margin: 22px 0; text-align: center; }
         .journey-location-title { font-size: 1.2em; font-weight: 800; color: #92400E; margin-bottom: 8px; }
-        .journey-location-text  { color: #78350F; font-size: 1.05em; font-weight: 600; }
-
-        .journey-next {
-            background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
-            border: 2px solid #8B5CF6; padding: 14px; border-radius: 12px; margin-top: 14px;
-        }
+        .journey-location-text { color: #78350F; font-size: 1.05em; font-weight: 600; }
+        .journey-next { background: linear-gradient(135deg, #EDE9FE, #DDD6FE); border: 2px solid #8B5CF6; padding: 14px; border-radius: 12px; margin-top: 14px; }
         .journey-next-title { font-weight: 700; color: #6B21A8; margin-bottom: 4px; font-size: 0.95em; }
-        .journey-next-text  { color: #7C3AED; font-size: 1.2em; font-weight: 800; }
-
-        .journey-map-container {
-            position: relative; background: white; padding: 30px; border-radius: 20px;
-            margin-top: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        }
-        .journey-map-img     { width: 100%; height: auto; border-radius: 12px; display: block; }
+        .journey-next-text { color: #7C3AED; font-size: 1.2em; font-weight: 800; }
+        .journey-map-container { position: relative; background: white; padding: 30px; border-radius: 20px; margin-top: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .journey-map-img { width: 100%; height: auto; border-radius: 12px; display: block; }
         .journey-map-overlay { position: absolute; top: 30px; left: 30px; right: 30px; bottom: 30px; pointer-events: none; }
-
-        .city-marker {
-            position: absolute; width: 42px; height: 42px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; cursor: pointer; pointer-events: all; transition: all 0.3s;
-            border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        .city-marker:hover     { transform: scale(1.35); z-index: 10; }
+        .city-marker { position: absolute; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 17px; cursor: pointer; pointer-events: all; transition: all 0.3s; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.35); transform: translate(-50%, -50%); }
+        .city-marker:hover { transform: translate(-50%, -50%) scale(1.4); z-index: 10; }
         .city-marker.completed { background: #10B981; }
-        .city-marker.current   { background: #F59E0B; animation: markerPulse 2s infinite; }
-        .city-marker.locked    { background: #94A3B8; }
-
-        @keyframes markerPulse {
-            0%,100% { transform: scale(1); }
-            50%     { transform: scale(1.2); box-shadow: 0 6px 20px rgba(245,158,11,0.5); }
-        }
-
-        .cities-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px; margin-top: 30px;
-        }
-
-        .city-card {
-            background: white; padding: 20px 14px; border-radius: 16px; text-align: center;
-            transition: all 0.3s; border: 2px solid transparent; cursor: pointer;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-        }
-        .city-card:hover     { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+        .city-marker.current { background: #F59E0B; animation: markerPulse 2s infinite; }
+        .city-marker.locked { background: #94A3B8; }
+        @keyframes markerPulse { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.2); box-shadow: 0 6px 20px rgba(245,158,11,0.5); } }
+        .cities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-top: 30px; }
+        .city-card { background: white; padding: 18px 12px; border-radius: 16px; text-align: center; transition: all 0.3s; border: 2px solid transparent; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.07); }
+        .city-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
         .city-card.completed { background: linear-gradient(135deg, #10B981, #059669); color: white; }
-        .city-card.current   { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; animation: cardPulse 2.5s infinite; }
-        .city-card.locked    { opacity: 0.4; }
-
-        @keyframes cardPulse {
-            0%,100% { transform: scale(1); }
-            50%     { transform: scale(1.04); }
-        }
-
-        .city-flag     { font-size: 2.2em; margin-bottom: 8px; }
-        .city-name     { font-weight: 800; font-size: 1em; margin-bottom: 4px; }
-        .city-distance { font-size: 0.82em; opacity: 0.8; font-weight: 600; }
-        .city-status   { margin-top: 8px; font-size: 1.2em; }
-
-        .loading   { text-align: center; color: #8B5CF6; padding: 25px; font-weight: 600; }
+        .city-card.current { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; animation: cardPulse 2.5s infinite; }
+        .city-card.locked { opacity: 0.4; }
+        @keyframes cardPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+        .city-flag { font-size: 2em; margin-bottom: 7px; }
+        .city-name { font-weight: 800; font-size: 0.95em; margin-bottom: 3px; }
+        .city-distance { font-size: 0.8em; opacity: 0.8; font-weight: 600; }
+        .city-status { margin-top: 7px; font-size: 1.1em; }
+        .loading { text-align: center; color: #8B5CF6; padding: 25px; font-weight: 600; }
         .error-msg { text-align: center; color: #DC2626; padding: 18px; background: #FEE2E2; border-radius: 10px; margin: 15px 0; }
-
         @media (max-width: 768px) {
             .nav-container { flex-direction: column; align-items: center; }
             .nav-menu { justify-content: center; }
@@ -310,7 +131,7 @@
             .journey-stats { grid-template-columns: 1fr; }
             .section { padding: 28px 18px; }
             .roulette-wheel { width: 230px; height: 230px; }
-            .cities-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+            .cities-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
         }
     </style>
 </head>
@@ -331,7 +152,6 @@
 
 <div class="container">
 
-    <!-- HOME -->
     <section id="home" class="section active">
         <h1 class="section-title">SLSP Run & Rise</h1>
         <p class="section-subtitle">"Začni s nami a bež za budúcnosť"<br>Iniciatíva Women's Voices</p>
@@ -356,7 +176,6 @@
         </div>
     </section>
 
-    <!-- CALENDAR -->
     <section id="calendar" class="section">
         <h1 class="section-title">📅 Kalendár Pretekov 2026</h1>
         <p class="section-subtitle">Inšpirácia na bežecké preteky v roku 2026</p>
@@ -365,14 +184,13 @@
         <div style="overflow-x:auto;">
             <table class="race-table" id="raceTable" style="display:none;">
                 <thead><tr>
-                    <th>Dátum</th><th>Názov</th><th>Mesto</th><th>Typ</th><th>Vzdialenosť</th><th>Link</th>
+                    <th>Dátum</th><th>Názov</th><th>Mesto</th><th>Vzdialenosť</th><th>Link</th>
                 </tr></thead>
                 <tbody id="raceTableBody"></tbody>
             </table>
         </div>
     </section>
 
-    <!-- LEADERBOARD -->
     <section id="leaderboard" class="section">
         <h1 class="section-title">🏆 Rebríček Bežkýň</h1>
         <p class="section-subtitle">Naše najaktívnejšie bežkyne</p>
@@ -390,12 +208,10 @@
         </div>
     </section>
 
-    <!-- CHALLENGES -->
     <section id="challenges" class="section">
         <h1 class="section-title">🎯 Bežecké Výzvy 2026</h1>
         <p class="section-subtitle">Mesačné výzvy pre všetky bežkyne — klikni na výzvu pre detaily</p>
         <div class="challenges-grid" id="challengesGrid"></div>
-
         <div class="roulette-section">
             <h2 class="roulette-title">🎰 Žrebovanie Víťazok</h2>
             <p class="roulette-subtitle">Náhodné žrebovanie</p>
@@ -411,11 +227,9 @@
         </div>
     </section>
 
-    <!-- JOURNEY -->
     <section id="journey" class="section">
         <h1 class="section-title">🗺️ Erste Group Journey</h1>
         <p class="section-subtitle">Bratislava → Budapešť → Bukurešť → Belehrad → Záhreb → Viedeň → Praha → Varšava → Bratislava</p>
-
         <div class="journey-stats">
             <div class="journey-stat">
                 <div class="journey-stat-number" id="journeyKm">0 km</div>
@@ -430,7 +244,6 @@
                 <div class="journey-stat-label">Krajiny</div>
             </div>
         </div>
-
         <div class="journey-location">
             <div class="journey-location-title">📍 Aktuálna pozícia</div>
             <div class="journey-location-text" id="journeyLocationText">Štart v Bratislave</div>
@@ -439,24 +252,20 @@
                 <div class="journey-next-text" id="journeyNextText">Budapešť — ešte 184 km</div>
             </div>
         </div>
-
         <div class="journey-map-container">
             <img src="map.png" alt="Erste Group Route" class="journey-map-img">
             <div class="journey-map-overlay" id="journeyMapOverlay"></div>
         </div>
-
         <div class="cities-grid" id="citiesGrid"></div>
     </section>
 
 </div>
 
-<!-- POPUPS -->
 <div class="popup-overlay" id="winnersOverlay" onclick="closeWinnersPopup()"></div>
 <div class="popup" id="winnersPopup">
     <span class="popup-close" onclick="closeWinnersPopup()">×</span>
     <div id="winnersPopupContent"></div>
 </div>
-
 <div class="popup-overlay" id="cityOverlay" onclick="closeCityPopup()"></div>
 <div class="popup" id="cityPopup" style="border-color:#8B5CF6;">
     <span class="popup-close" onclick="closeCityPopup()">×</span>
@@ -464,100 +273,6 @@
 </div>
 
 <script>
-// ============================================================
-// CHALLENGES
-// ============================================================
-const challenges = [
-    { month:"Marec",     type:"Tematická",  title:"Fresh Start Challenge",     desc:"10 dní s aktivitou (beh/chôdza > 20 min) + fotka z obľúbeného miesta",                         csvFile:"participants_marec_thematic.csv" },
-    { month:"Marec",     type:"Výkonová",   title:"Base Builder",              desc:"Odbehni 50 km za mesiac alebo min. 8 behov (25–45 min) + fotka z obľúbeného miesta",            csvFile:"participants_marec_performance.csv" },
-    { month:"Apríl",     type:"Tematická",  title:"Spring Awakening",          desc:"Odbehni 3 behy v prírode (les/park/lúka) + 1 silový tréning",                                  csvFile:"participants_april_thematic.csv" },
-    { month:"Apríl",     type:"Výkonová",   title:"Tempo & Power",             desc:"Odbehni 4 tempo behy + 2 silové tréningy",                                                      csvFile:"participants_april_performance.csv" },
-    { month:"Máj",       type:"Tematická",  title:"Buddy Boost",               desc:"Za každé 2 behy vo dvojici/skupinke kolegyniek získaš lístok do žrebovania",                   csvFile:"participants_maj_thematic.csv" },
-    { month:"Máj",       type:"Výkonová",   title:"Progress Challenge",        desc:"Navýšaj mesačný objem km vs. Apríla o 10%",                                                     csvFile:"participants_maj_performance.csv" },
-    { month:"Jún",       type:"Tematická",  title:"Sunrise Challenge",         desc:"Bež pred 7:00 ráno a zdieľaj fotku východu slnka",                                              csvFile:"participants_jun_thematic.csv" },
-    { month:"Jún",       type:"Výkonová",   title:"Early Summer Intervals",    desc:"Absolvuj 4 ranné intervalóve behy podľa úrovne (05:00–09:00)",                                 csvFile:"participants_jun_performance.csv" },
-    { month:"Júl",       type:"Tematická",  title:"Trail Moment",              desc:"Nabehaj aspoň 100 výškových metrov na jednom behu alebo túra + fotka",                         csvFile:"participants_jul_thematic.csv" },
-    { month:"Júl",       type:"Výkonová",   title:"Hills Challenge",           desc:"Absolvuj min. 3 behy do kopcov alebo trail behy + 2 core tréningy",                             csvFile:"participants_jul_performance.csv" },
-    { month:"August",    type:"Tematická",  title:"Summer Explorer",           desc:"Bež v novom/cudzom meste počas dovolenky a zdieľaj fotku + 1 jóga/mobility",                   csvFile:"participants_august_thematic.csv" },
-    { month:"August",    type:"Výkonová",   title:"Long Run Month",            desc:"Absolvuj min. 4 dlhé behy (60–90 min) + 1 jóga/mobility",                                       csvFile:"participants_august_performance.csv" },
-    { month:"September", type:"Tematická",  title:"Together We Finish Strong", desc:"Zúčastni sa dm žensky behu ALEBO bež virtuálne v ten istý deň - spoločne na finish line! 🏁", csvFile:"participants_september_thematic.csv" },
-    { month:"September", type:"Výkonová",   title:"Season Finale Challenge",   desc:"Prekonaj svoj najlepší výkon z celého roka - záverečný beh sezóny!",                           csvFile:"participants_september_performance.csv" }
-];
-
-// ============================================================
-// TRASA — 9 zastávok, 8 krajín
-// SK → HU → RO → RS → HR → AT → CZ → PL → SK(cieľ)
-// ============================================================
-const ersteRoute = [
-    {
-        city:"Bratislava", country:"Slovensko", flag:"🇸🇰", km:0,
-        mapX:30, mapY:38,
-        runFact:"V roku 2025 pri 20. ročníku ČSOB maratónu Slováci ovládli všetky štyri hlavné disciplíny — čo sa ešte nikdy nestalo.",
-        ersteFact:"Slovenská sporiteľňa je súčasťou Erste Group od roku 2001"
-    },
-    {
-        city:"Budapešť", country:"Maďarsko", flag:"🇭🇺", km:184,
-        mapX:38, mapY:50,
-        runFact:"UltraBalaton patrí medzi najobľúbenejšie ultra preteky v krajine: 211 km okolo Balatonu možno ísť sólo alebo v tímoch.",
-        ersteFact:"Erste Bank pôsobí v Maďarsku od roku 1997"
-    },
-    {
-        city:"Bukurešť", country:"Rumunsko", flag:"🇷🇴", km:951,
-        mapX:88, mapY:92,
-        runFact:"Transylvania 100 je ultra trail s dĺžkami až 100 km, ktorý vedie cez hrady, hory a legendárne krajiny spájané s Draculom.",
-        ersteFact:"Banca Comercială Română je najväčšia banka v Rumunsku"
-    },
-    {
-        city:"Belehrad", country:"Srbsko", flag:"🇷🇸", km:1528,
-        mapX:50, mapY:84,
-        runFact:"Počas NATO bombardovania sa maratón nezrušil — 17. apríla 1999 sa bežal ako skupinový kontrolovaný beh a do cieľa prišlo asi 40 bežcov z 9 krajín.",
-        ersteFact:"Erste Bank podporuje digitálne bankovníctvo v Srbsku od roku 2005"
-    },
-    {
-        city:"Záhreb", country:"Chorvátsko", flag:"🇭🇷", km:1951,
-        mapX:18, mapY:72,
-        runFact:"Marija Vrajić Trošić — chorvátska ultra legenda. V roku 2015 získala bronz na IAU 100 km majstrovstvách sveta.",
-        ersteFact:"Erste & Steiermärkische Bank pôsobí v Chorvátsku od roku 2003"
-    },
-    {
-        city:"Viedeň", country:"Rakúsko", flag:"🇦🇹", km:2266,
-        mapX:22, mapY:38,
-        runFact:"Karin Freitag v roku 2025 prekonala rakúsky rekord v 24h behu výkonom 229,457 km — po troch týždňoch od 100 km MS.",
-        ersteFact:"Erste Group má sídlo vo Viedni a pôsobí od roku 1819"
-    },
-    {
-        city:"Praha", country:"Česko", flag:"🇨🇿", km:2553,
-        mapX:8, mapY:10,
-        runFact:"RunCzech udeľuje titul „PIM King" a „PIM Queen" tým, ktorí dokončili 15 pražských maratónov. Prvou a jedinou PIM Queen bola Věra Vavrejnová.",
-        ersteFact:"Česká spořitelna je lídrom digitálneho bankovníctva v Česku"
-    },
-    {
-        city:"Varšava", country:"Poľsko", flag:"🇵🇱", km:3133,
-        mapX:42, mapY:4,
-        runFact:"Inauguračný „Maratón mieru" v roku 1979 meral iba 40,6 km, nie oficiálnych 42,195 km. Dnes je plnohodnotným maratónom.",
-        ersteFact:"Erste Group expanduje na poľskom trhu v strednej Európe"
-    },
-    {
-        city:"Bratislava", country:"Slovensko", flag:"🇸🇰", km:3740,
-        mapX:30, mapY:38,
-        runFact:"Dokončili sme okruh! 🎉 Bravó všetkým bežkyniam — späť v cieli!",
-        ersteFact:"Späť v centrále Slovenskej sporiteľne — okruh uzavretý!"
-    }
-];
-
-const TOTAL_KM  = 3740;
-const RACE_DATE = new Date('2026-09-19T00:00:00');
-
-let participants          = [];
-let challengeWinners      = {};
-let isSpinning            = false;
-let statsData             = { runners: 0, kilometers: 0 };
-let currentChallengeIndex = null;
-let currentParticipants   = [];
-
-// ============================================================
-// NAVIGATION
-// ============================================================
 function showSection(id, el) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -565,23 +280,11 @@ function showSection(id, el) {
     el.classList.add('active');
 }
 
-// ============================================================
-// INIT
-// ============================================================
-document.addEventListener('DOMContentLoaded', () => {
-    loadStats();
-    loadRaces();
-    loadLeaderboard();
-    loadParticipants();
-    loadChallengeWinners();
-    renderChallenges();
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-});
+const RACE_DATE = new Date('2026-09-19T00:00:00');
+const TOTAL_KM  = 3740;
 
-// ============================================================
-// COUNTDOWN
-// ============================================================
+function pad(n) { return String(n).padStart(2,'0'); }
+
 function updateCountdown() {
     const diff = RACE_DATE - new Date();
     if (diff <= 0) {
@@ -594,32 +297,112 @@ function updateCountdown() {
     const m = Math.floor((diff % 3600000)  / 60000);
     const s = Math.floor((diff % 60000)    / 1000);
     document.getElementById('countdownDays').textContent = d;
-    document.getElementById('countdownTime').textContent = pad(h) + 'h ' + pad(m) + 'm ' + pad(s) + 's';
+    document.getElementById('countdownTime').textContent = pad(h)+'h '+pad(m)+'m '+pad(s)+'s';
 }
-function pad(n) { return String(n).padStart(2, '0'); }
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+const challenges = [
+    { month:"Marec",     type:"Tematická",  title:"Fresh Start Challenge",     desc:"10 dni s aktivitou (beh/chodza > 20 min) + fotka z oblubeneho miesta",                        csvFile:"participants_marec_thematic.csv" },
+    { month:"Marec",     type:"Výkonová",   title:"Base Builder",              desc:"Odbehni 50 km za mesiac alebo min. 8 behov (25-45 min) + fotka z oblubeneho miesta",           csvFile:"participants_marec_performance.csv" },
+    { month:"Apríl",     type:"Tematická",  title:"Spring Awakening",          desc:"Odbehni 3 behy v prirode (les/park/luka) + 1 silovy trening",                                 csvFile:"participants_april_thematic.csv" },
+    { month:"Apríl",     type:"Výkonová",   title:"Tempo & Power",             desc:"Odbehni 4 tempo behy + 2 silove treningy",                                                     csvFile:"participants_april_performance.csv" },
+    { month:"Máj",       type:"Tematická",  title:"Buddy Boost",               desc:"Za kazde 2 behy vo dvojici/skupinke kolegyniek ziskas listok do zrebovania",                  csvFile:"participants_maj_thematic.csv" },
+    { month:"Máj",       type:"Výkonová",   title:"Progress Challenge",        desc:"Navysaj mesacny objem km vs. Aprila o 10%",                                                    csvFile:"participants_maj_performance.csv" },
+    { month:"Jún",       type:"Tematická",  title:"Sunrise Challenge",         desc:"Bez pred 7:00 rano a zdielaj fotku vychodu slnka",                                             csvFile:"participants_jun_thematic.csv" },
+    { month:"Jún",       type:"Výkonová",   title:"Early Summer Intervals",    desc:"Absolvuj 4 ranne intervalove behy podla urovne (05:00-09:00)",                                csvFile:"participants_jun_performance.csv" },
+    { month:"Júl",       type:"Tematická",  title:"Trail Moment",              desc:"Nabehaj aspon 100 vyskovych metrov na jednom behu alebo tura + fotka",                        csvFile:"participants_jul_thematic.csv" },
+    { month:"Júl",       type:"Výkonová",   title:"Hills Challenge",           desc:"Absolvuj min. 3 behy do kopcov alebo trail behy + 2 core treningy",                            csvFile:"participants_jul_performance.csv" },
+    { month:"August",    type:"Tematická",  title:"Summer Explorer",           desc:"Bez v novom/cudzom meste pocas dovolenky a zdielaj fotku + 1 joga/mobility",                  csvFile:"participants_august_thematic.csv" },
+    { month:"August",    type:"Výkonová",   title:"Long Run Month",            desc:"Absolvuj min. 4 dlhe behy (60-90 min) + 1 joga/mobility",                                      csvFile:"participants_august_performance.csv" },
+    { month:"September", type:"Tematická",  title:"Together We Finish Strong", desc:"Zucastni sa dm zenskeho behu ALEBO bez virtualne v ten isty den - spolocne na finish line!", csvFile:"participants_september_thematic.csv" },
+    { month:"September", type:"Výkonová",   title:"Season Finale Challenge",   desc:"Prekonaj svoj najlepsi vykon z celeho roka - zaverecny beh sezony!",                          csvFile:"participants_september_performance.csv" }
+];
 
 // ============================================================
-// LOAD: stats
+// TRASA — súradnice presne podľa polohy miest na mape
+// mapX = % od ľavého okraja, mapY = % od horného okraja
 // ============================================================
+const ersteRoute = [
+    { city:"Bratislava", country:"Slovensko",  flag:"🇸🇰", km:0,
+      mapX:30, mapY:51,
+      runFact:"V roku 2025 pri 20. rocniku CSOB maratonu Slovaci ovladli vsetky styri hlavne discipliny - co sa este nikdy nestalo.",
+      ersteFact:"Slovenska sporitelna je sucastou Erste Group od roku 2001" },
+
+    { city:"Budapešť",   country:"Maďarsko",   flag:"🇭🇺", km:184,
+      mapX:42, mapY:61,
+      runFact:"UltraBalaton patri medzi najoblribenejsie ultra preteky v krajine: 211 km okolo Balatonu mozno ist solo alebo v timoch.",
+      ersteFact:"Erste Bank posobil v Madarsku od roku 1997" },
+
+    { city:"Bukurešť",   country:"Rumunsko",   flag:"🇷🇴", km:951,
+      mapX:90, mapY:92,
+      runFact:"Transylvania 100 je ultra trail s dlzkami az 100 km, ktory vedie cez hrady, hory a legendarne krajiny spajane s Draculom.",
+      ersteFact:"Banca Comerciala Romana je najvacsia banka v Rumunsku" },
+
+    { city:"Belehrad",   country:"Srbsko",     flag:"🇷🇸", km:1528,
+      mapX:52, mapY:89,
+      runFact:"Pocas NATO bombardovania sa maraton nezrusil - 17. aprila 1999 sa bezal ako skupinovy kontrolovany beh a do ciela prislo asi 40 bezecov z 9 krajin.",
+      ersteFact:"Erste Bank podporuje digitalne bankovnictvo v Srbsku od roku 2005" },
+
+    { city:"Záhreb",     country:"Chorvátsko", flag:"🇭🇷", km:1951,
+      mapX:23, mapY:78,
+      runFact:"Marija Vrajic Trosic - chorvatska ultra legenda. V roku 2015 ziskala bronz na IAU 100 km majstrovstvach sveta.",
+      ersteFact:"Erste & Steiermärkische Bank posobi v Chorvatsku od roku 2003" },
+
+    { city:"Viedeň",     country:"Rakúsko",    flag:"🇦🇹", km:2266,
+      mapX:25, mapY:53,
+      runFact:"Karin Freitag v roku 2025 prekonala rakusky rekord v 24h behu vykonom 229,457 km - po troch tyzdenoch od 100 km MS.",
+      ersteFact:"Erste Group ma sidlo vo Viedni a posobi od roku 1819" },
+
+    { city:"Praha",      country:"Česko",      flag:"🇨🇿", km:2553,
+      mapX:12,  mapY:31,
+      runFact:"RunCzech udeluje titul PIM King a PIM Queen tym, ktori dokoncili 15 prazskych maratonov. Prvou a jedinou PIM Queen bola Vera Vavrejnova.",
+      ersteFact:"Ceska sporitelna je lidrom digitalneho bankovnictva v Cesku" },
+
+    { city:"Varšava",    country:"Poľsko",     flag:"🇵🇱", km:3133,
+      mapX:55, mapY:6,
+      runFact:"Inaugurachy Maraton mieru v roku 1979 meral iba 40,6 km, nie oficialnych 42,195 km. Dnes je plnohodnotnym maratorom.",
+      ersteFact:"Erste Group expanduje na polskom trhu v strednej Europe" },
+
+    {city:"Bratislava",   country:"Slovensko",   flag:"🇸🇰", km:3740,}
+
+];
+
+let participants          = [];
+let challengeWinners      = {};
+let isSpinning            = false;
+let statsData             = { runners: 0, kilometers: 0 };
+let currentChallengeIndex = null;
+let currentParticipants   = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderChallenges();
+    updateJourney();
+    loadStats();
+    loadRaces();
+    loadLeaderboard();
+    loadParticipants();
+    loadChallengeWinners();
+});
+
 async function loadStats() {
     try {
         const r = await fetch('data_stats.json');
+        if (!r.ok) throw new Error('no file');
         statsData = await r.json();
         document.getElementById('totalRunners').textContent = statsData.runners;
         document.getElementById('totalKm').textContent      = statsData.kilometers.toFixed(1);
+        updateJourney();
     } catch(e) {
-        document.getElementById('totalRunners').textContent = '0';
-        document.getElementById('totalKm').textContent      = '0.0';
+        document.getElementById('totalRunners').textContent = '—';
+        document.getElementById('totalKm').textContent      = '—';
     }
-    updateJourney();
 }
 
-// ============================================================
-// LOAD: races
-// ============================================================
 async function loadRaces() {
     try {
-        const r     = await fetch('data_races.csv');
+        const r = await fetch('data_races.csv');
+        if (!r.ok) throw new Error('no file');
         const text  = await r.text();
         const lines = text.split('\n').slice(1);
         const tbody = document.getElementById('raceTableBody');
@@ -631,24 +414,22 @@ async function loadRaces() {
             if (p[1] && p[1].includes('Od Tatier')) tr.className = 'race-highlight';
             const linkHtml = (p[4] && p[4].startsWith('http'))
                 ? '<a href="' + p[4] + '" target="_blank">Link</a>' : '—';
-             tr.innerHTML = '<td>'+(p[0]||'')+'</td><td>'+(p[1]||'')+'</td><td>'+(p[2]||'')+'</td><td>'+(p[3]||'')+'</td><td>'+linkHtml+'</td>';
-             tbody.appendChild(tr);
+            tr.innerHTML = '<td>'+(p[0]||'')+'</td><td>'+(p[1]||'')+'</td><td>'+(p[2]||'')+'</td><td>'+(p[3]||'')+'</td><td>'+linkHtml+'</td>';
+            tbody.appendChild(tr);
         });
         document.getElementById('calendarLoading').style.display = 'none';
         document.getElementById('raceTable').style.display = 'table';
     } catch(e) {
         document.getElementById('calendarLoading').style.display = 'none';
         document.getElementById('calendarError').style.display   = 'block';
-        document.getElementById('calendarError').textContent     = 'Chyba pri načítaní kalendára.';
+        document.getElementById('calendarError').textContent     = 'Subor data_races.csv nebol najdeny.';
     }
 }
 
-// ============================================================
-// LOAD: leaderboard
-// ============================================================
 async function loadLeaderboard() {
     try {
-        const r     = await fetch('data_leaderboard.csv');
+        const r = await fetch('data_leaderboard.csv');
+        if (!r.ok) throw new Error('no file');
         const text  = await r.text();
         const lines = text.split('\n').slice(1);
         const kmArr = [], minArr = [];
@@ -660,25 +441,23 @@ async function loadLeaderboard() {
                 minArr.push({ name, value: parseFloat(mins) });
             }
         });
-        kmArr.sort((a,b)  => b.value - a.value);
+        kmArr.sort((a,b) => b.value - a.value);
         minArr.sort((a,b) => b.value - a.value);
-        renderLeaderboard('kmLeaderboard',      kmArr.slice(0,10),  ' km');
-        renderLeaderboard('minutesLeaderboard', minArr.slice(0,10), ' min');
+        renderLeaderboard('kmLeaderboard',      kmArr.slice(0,10), ' km');
+        renderLeaderboard('minutesLeaderboard', minArr.slice(0,10),' min');
         document.getElementById('leaderboardLoading').style.display = 'none';
         document.getElementById('leaderboardGrid').style.display    = 'grid';
     } catch(e) {
         document.getElementById('leaderboardLoading').style.display = 'none';
         document.getElementById('leaderboardError').style.display   = 'block';
-        document.getElementById('leaderboardError').textContent     = 'Chyba pri načítaní rebríčka.';
+        document.getElementById('leaderboardError').textContent     = 'Subor data_leaderboard.csv nebol najdeny.';
     }
 }
 
-// ============================================================
-// LOAD: participants
-// ============================================================
 async function loadParticipants() {
     try {
-        const r     = await fetch('data_participants.csv');
+        const r = await fetch('data_winners_participants.csv');
+        if (!r.ok) throw new Error('no file');
         const text  = await r.text();
         const lines = text.split('\n');
         const first = lines[0].trim().toLowerCase();
@@ -688,28 +467,23 @@ async function loadParticipants() {
         if (participants.length > 0) {
             document.getElementById('rouletteLoading').style.display = 'none';
             document.getElementById('rouletteContent').style.display = 'block';
-            document.getElementById('participantsCount').textContent = `Počet účastníčok: ${participants.length}`;
+            document.getElementById('participantsCount').textContent = `Pocet ucastnicok: ${participants.length}`;
         } else throw new Error('empty');
     } catch(e) {
         document.getElementById('rouletteLoading').style.display = 'none';
         document.getElementById('rouletteError').style.display   = 'block';
-        document.getElementById('rouletteError').textContent     = 'Zatiaľ žiadne účastníčky pre žrebovanie.';
+        document.getElementById('rouletteError').textContent     = 'Zatial ziadne ucastnicky pre zrebovanie.';
     }
 }
 
-// ============================================================
-// LOAD: challenge winners
-// ============================================================
 async function loadChallengeWinners() {
     try {
         const r = await fetch('data_challenge_winners.json');
+        if (!r.ok) throw new Error('no file');
         challengeWinners = await r.json();
     } catch(e) { challengeWinners = {}; }
 }
 
-// ============================================================
-// RENDER: challenges
-// ============================================================
 function renderChallenges() {
     document.getElementById('challengesGrid').innerHTML = challenges.map((c,i) => `
         <div class="challenge-card" onclick="openWinnersPopup(${i})">
@@ -719,16 +493,12 @@ function renderChallenges() {
             </div>
             <div class="challenge-title">${c.title}</div>
             <div class="challenge-desc">${c.desc}</div>
-        </div>
-    `).join('');
+        </div>`).join('');
 }
 
-// ============================================================
-// RENDER: leaderboard
-// ============================================================
 function renderLeaderboard(elId, data, suffix) {
     document.getElementById(elId).innerHTML = data.map((item,i) => {
-        const rc = i===0 ? 'gold' : i===1 ? 'silver' : i===2 ? 'bronze' : 'other';
+        const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'other';
         return `<div class="leader-item">
             <div class="leader-rank ${rc}">${i+1}</div>
             <div class="leader-name">${item.name}</div>
@@ -737,18 +507,12 @@ function renderLeaderboard(elId, data, suffix) {
     }).join('');
 }
 
-// ============================================================
-// POPUP: výzva
-// ============================================================
 async function openWinnersPopup(i) {
     currentChallengeIndex = i;
     const c   = challenges[i];
     const key = `${c.month} - ${c.title}`;
     const w   = challengeWinners[key];
-
-    let html = `<div class="popup-title">${c.title}</div>
-                <div class="popup-month">${c.month} · ${c.type}</div>`;
-
+    let html  = `<div class="popup-title">${c.title}</div><div class="popup-month">${c.month} · ${c.type}</div>`;
     if (w && w.length > 0) {
         html += '<ul class="winners-list">' + w.map(name => `<li>${name}</li>`).join('') + '</ul>';
         document.getElementById('winnersPopupContent').innerHTML = html;
@@ -756,43 +520,29 @@ async function openWinnersPopup(i) {
         document.getElementById('winnersOverlay').classList.add('show');
         return;
     }
-
     try {
-        const r     = await fetch(c.csvFile);
+        const r = await fetch(c.csvFile);
+        if (!r.ok) throw new Error('no file');
         const text  = await r.text();
         const lines = text.split('\n');
         const first = lines[0].trim().toLowerCase();
         const start = (first === 'meno' || first === 'name') ? 1 : 0;
         currentParticipants = lines.slice(start).map(l => l.trim()).filter(n => n.length > 0);
-
         if (currentParticipants.length > 0) {
             html += `<div style="text-align:center;margin:20px 0;">
-                        <p style="color:#78350F;font-weight:600;margin-bottom:15px;">
-                            Počet účastníčok: ${currentParticipants.length}
-                        </p>
-                        <div class="roulette-wheel" id="popupRouletteWheel" style="width:200px;height:200px;margin:15px auto;">
-                            <span class="roulette-result" id="popupRouletteResult">?</span>
-                        </div>
-                        <button class="spin-btn" onclick="spinChallengeRoulette()" id="popupSpinBtn">
-                            🎲 Žrebovať Víťazku!
-                        </button>
-                    </div>`;
+                <p style="color:#78350F;font-weight:600;margin-bottom:15px;">Pocet ucastnicok: ${currentParticipants.length}</p>
+                <div class="roulette-wheel" id="popupRouletteWheel" style="width:200px;height:200px;margin:15px auto;">
+                    <span class="roulette-result" id="popupRouletteResult">?</span>
+                </div>
+                <button class="spin-btn" onclick="spinChallengeRoulette()" id="popupSpinBtn">🎲 Zrebovat Vitazku!</button>
+            </div>`;
         } else {
-            html += `<div class="not-evaluated">
-                        <div class="icon">👥</div>
-                        <p>Zatiaľ žiadne účastníčky</p>
-                        <p class="sub">Nahrajte súbor: ${c.csvFile}</p>
-                    </div>`;
+            html += `<div class="not-evaluated"><div class="icon">👥</div><p>Zatial ziadne ucastnicky</p><p class="sub">Nahrajte subor: ${c.csvFile}</p></div>`;
         }
     } catch(e) {
         currentParticipants = [];
-        html += `<div class="not-evaluated">
-                    <div class="icon">⏳</div>
-                    <p>Výzva zatiaľ nebola hodnotená</p>
-                    <p class="sub">CSV súbor: ${c.csvFile}</p>
-                </div>`;
+        html += `<div class="not-evaluated"><div class="icon">⏳</div><p>Vyzva zatial nebola hodnotena</p><p class="sub">CSV subor: ${c.csvFile}</p></div>`;
     }
-
     document.getElementById('winnersPopupContent').innerHTML = html;
     document.getElementById('winnersPopup').classList.add('show');
     document.getElementById('winnersOverlay').classList.add('show');
@@ -820,10 +570,8 @@ function spinChallengeRoulette() {
         btn.disabled = false;
         setTimeout(() => {
             const c = challenges[currentChallengeIndex];
-            const confirmed = confirm(`🎉🎉🎉\n\nVÍŤAZKA:\n${winner}\n\nGratulujeme! 🎊\n\nUložiť výsledok do víťazov?`);
-            if (confirmed) {
-                alert(`Pridajte do data_challenge_winners.json:\n\n"${c.month} - ${c.title}": ["${winner}"]`);
-            }
+            const confirmed = confirm('VITAZKA:\n' + winner + '\n\nUlozit vysledok?');
+            if (confirmed) alert('Pridajte do data_challenge_winners.json:\n\n"' + c.month + ' - ' + c.title + '": ["' + winner + '"]');
         }, 500);
     }, 3200);
 }
@@ -833,9 +581,6 @@ function closeWinnersPopup() {
     document.getElementById('winnersOverlay').classList.remove('show');
 }
 
-// ============================================================
-// ROULETTE globálne
-// ============================================================
 function spinRoulette() {
     if (!participants.length || isSpinning) return;
     isSpinning = true;
@@ -856,51 +601,39 @@ function spinRoulette() {
         wheel.classList.remove('spinning');
         isSpinning = false;
         btn.disabled = false;
-        setTimeout(() => alert('🎉🎉🎉\n\nVÍŤAZKA:\n' + winner + '\n\nGratulujeme! 🎊'), 500);
+        setTimeout(() => alert('VITAZKA:\n' + winner + '\n\nGratulujeme!'), 500);
     }, 3200);
 }
 
-// ============================================================
-// Počíta unikátne krajiny — max 8
-// Slovensko sa počíta len raz (štart aj cieľ = 1 krajina)
-// ============================================================
 function countCountries() {
     const km        = statsData.kilometers;
     const countries = new Set();
-    ersteRoute.forEach(city => {
-        if (km >= city.km) countries.add(city.country);
-    });
+    ersteRoute.forEach(city => { if (km >= city.km) countries.add(city.country); });
     return Math.min(countries.size, 8);
 }
 
-// ============================================================
-// JOURNEY
-// ============================================================
 function updateJourney() {
     const km  = statsData.kilometers;
     const pct = Math.min((km / TOTAL_KM) * 100, 100);
-
-    document.getElementById('journeyKm').textContent     = km.toFixed(1) + ' km';
-    document.getElementById('journeyPercent').textContent = pct.toFixed(1) + '%';
-    document.getElementById('journeyCities').textContent  = countCountries() + '/8';
+    document.getElementById('journeyKm').textContent      = km.toFixed(1) + ' km';
+    document.getElementById('journeyPercent').textContent  = pct.toFixed(1) + '%';
+    document.getElementById('journeyCities').textContent   = countCountries() + '/8';
 
     let curIdx = 0;
     for (let i = 0; i < ersteRoute.length; i++) {
         if (km >= ersteRoute[i].km) curIdx = i;
     }
-
     const cur  = ersteRoute[curIdx];
     const next = ersteRoute[curIdx + 1];
 
     if (km >= TOTAL_KM) {
-        document.getElementById('journeyLocationText').textContent = '🎉 Okruh dokončený! Gratulujeme!';
+        document.getElementById('journeyLocationText').textContent = 'Okruh dokonceny! Gratulujeme!';
         document.getElementById('journeyNext').style.display = 'none';
     } else if (next) {
-        document.getElementById('journeyLocationText').textContent = `Na ceste medzi ${cur.city} a ${next.city}`;
-        document.getElementById('journeyNextText').textContent     = `${next.city} — ešte ${(next.km - km).toFixed(1)} km`;
+        document.getElementById('journeyLocationText').textContent = 'Na ceste medzi ' + cur.city + ' a ' + next.city;
+        document.getElementById('journeyNextText').textContent     = next.city + ' - este ' + (next.km - km).toFixed(1) + ' km';
     }
 
-    // Markery na mape
     const overlay = document.getElementById('journeyMapOverlay');
     overlay.innerHTML = '';
     ersteRoute.forEach((city, i) => {
@@ -908,15 +641,15 @@ function updateJourney() {
         if (km >= city.km)       cls = 'completed';
         else if (i === curIdx+1) cls = 'current';
         const m = document.createElement('div');
-        m.className  = `city-marker ${cls}`;
+        m.className  = 'city-marker ' + cls;
         m.style.left = city.mapX + '%';
         m.style.top  = city.mapY + '%';
         m.innerHTML  = city.flag;
-        m.onclick    = () => openCityPopup(i);
+        m.title      = city.city;
+        m.onclick    = function() { openCityPopup(i); };
         overlay.appendChild(m);
     });
 
-    // Kartičky miest
     document.getElementById('citiesGrid').innerHTML = ersteRoute.map((city, i) => {
         let status = 'locked', icon = '🔒';
         if (km >= city.km) { status = 'completed'; icon = '✅'; }
@@ -924,34 +657,25 @@ function updateJourney() {
             const nt = ersteRoute.find(c => c.km > km);
             if (nt && nt.city === city.city && nt.km === city.km) { status = 'current'; icon = '🎯'; }
         }
-        return `<div class="city-card ${status}" onclick="openCityPopup(${i})">
-            <div class="city-flag">${city.flag}</div>
-            <div class="city-name">${city.city}</div>
-            <div class="city-distance">${city.km} km</div>
-            <div class="city-status">${icon}</div>
-        </div>`;
+        return '<div class="city-card ' + status + '" onclick="openCityPopup(' + i + ')">' +
+            '<div class="city-flag">' + city.flag + '</div>' +
+            '<div class="city-name">' + city.city + '</div>' +
+            '<div class="city-distance">' + city.km + ' km</div>' +
+            '<div class="city-status">' + icon + '</div>' +
+        '</div>';
     }).join('');
 }
 
-// ============================================================
-// POPUP: mesto
-// ============================================================
 function openCityPopup(i) {
     const c = ersteRoute[i];
-    document.getElementById('cityPopupContent').innerHTML = `
-        <div class="city-popup-title">${c.flag} ${c.city}, ${c.country}</div>
-        <div class="city-popup-section">
-            <div class="city-popup-label">🏃‍♀️ Bežecký fakt:</div>
-            <div class="city-popup-text">${c.runFact}</div>
-        </div>
-        <div class="city-popup-section">
-            <div class="city-popup-label">🏦 Erste Bank fakt:</div>
-            <div class="city-popup-text">${c.ersteFact}</div>
-        </div>
-        <div class="city-popup-section">
-            <div class="city-popup-label">📍 Vzdialenosť od štartu:</div>
-            <div class="city-popup-text">${c.km} km</div>
-        </div>`;
+    document.getElementById('cityPopupContent').innerHTML =
+        '<div class="city-popup-title">' + c.flag + ' ' + c.city + ', ' + c.country + '</div>' +
+        '<div class="city-popup-section"><div class="city-popup-label">Bezecky fakt:</div>' +
+        '<div class="city-popup-text">' + c.runFact + '</div></div>' +
+        '<div class="city-popup-section"><div class="city-popup-label">Erste Bank fakt:</div>' +
+        '<div class="city-popup-text">' + c.ersteFact + '</div></div>' +
+        '<div class="city-popup-section"><div class="city-popup-label">Vzdialenost od startu:</div>' +
+        '<div class="city-popup-text">' + c.km + ' km</div></div>';
     document.getElementById('cityPopup').classList.add('show');
     document.getElementById('cityOverlay').classList.add('show');
 }
