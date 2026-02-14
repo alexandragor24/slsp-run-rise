@@ -1,7 +1,7 @@
 ﻿Dátum,Názov,Mesto,Vzdialenosť,Link
 07.03.2026,ČSOB zimná séria 2025/2026 – 4. kolo – MDŽ edícia,Bratislava - Starémest/Ružinov,5-10,https://register.hakuapp.com/?event=00e2e6e7678581b6d74e
-"08.03.2026,Majcichovská desiatka,""Majcichov, okr. Trnava"",10,https://beh.sk/pretek/majcichovska-desiatka-18/"
-"08.03.2026,Beh Oľšavskou dolinou,""Blažice, okr. Košice-okolie"",16,https://beh.sk/pretek/zimny-beh-olsavskou-dolinou-15/"
+08.03.2026,Majcichovská desiatka,Majcichov,10,https://beh.sk/pretek/majcichovska-desiatka-18/
+08.03.2026,Beh Oľšavskou dolinou,Blažice,16,https://beh.sk/pretek/zimny-beh-olsavskou-dolinou-15/
 14.03.2026,Čiernokľačianska pyxida,Čierne Kľačany okr. Zlaté Moravce,5-15,https://beh.sk/pretek/ciernoklacianska-pyxida-15/
 14.03.2026,Beh Mateja Bela Funtíka,Očová,5-10,https://www.terminovka.sk/podujatie/beh-mateja-bela-funtika
 20.03.2026,Brežiansky cestný beh,Brežany,6,https://beh.sk/pretek/breziansky-cestny-beh-10/
@@ -9,14 +9,14 @@
 22.03.2026,Špačinský jarný kros,Špačince okr. Trnava,10,https://beh.sk/pretek/spacinsky-jarny-kros-8/
 28.03.2026,Mesto Behu - Beh oslobodenia Galanty,Galanta,5-10,https://beh.sk/pretek/beh-oslobodenia-galanty-38/
 29.03.2026,Laborecká desiatka,Strážske,10,https://beh.sk/pretek/laborecka-desiatka-15/
-"29.03.2026,Beh 2 míle Bratislava – 3. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-3-kolo-18/"
+29.03.2026,Beh 2 míle Bratislava – 3. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-3-kolo-18/
 04.04.2026,ČSOB Bratislava Marathon 2026,Bratislava,42,https://beh.sk/pretek/csob-bratislava-marathon-2026/
 04.04.2026,Beh Slanských vrchov,Kokošovce,5-10,https://beh.sk/pretek/beh-slanskych-vrchov-7/
 05.04.2026,ČSOB Bratislava Marathon 2026,Bratislava,10-21,https://beh.sk/pretek/csob-bratislava-marathon-2026/
 11.04.2026,Národný beh Devín – Bratislava,Bratislava,11,https://beh.sk/pretek/narodny-beh-devin-bratislava-78/
 18.04.2026,Belianska pätnástka,Spišská Belá,5-15,https://beh.sk/pretek/belianska-patnastka-10/
 18.04.2026,Považský maratón,Považská Bystrica,42,https://beh.sk/pretek/povazsky-maraton-18/
-"19.04.2026,Beh 2 míle Bratislava – 4. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-4-kolo-18/"
+19.04.2026,Beh 2 míle Bratislava – 4. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-4-kolo-18/
 19.04.2026,Zbehovská osmička,Zbehy,8,https://beh.sk/pretek/zbehovska-osmicka-10/
 25.04.2026,Beh na Zniev,Kláštor pod Znievom,3-6,https://beh.sk/pretek/beh-na-zniev-26/
 26.04.2026,Žitnoostrovský beh,Dunajská Streda,5-10,https://beh.sk/pretek/zitnoostrovsky-beh-11/
@@ -28,9 +28,10 @@
 09.05.2026,Májová 5 a 10,Malacky,5-10,https://beh.sk/pretek/majova-5-a-10-10/
 10.05.2026,Mestský beh v Trebišove,Trebišov,5-10,https://beh.sk/pretek/mestsky-beh-v-trebisove-10/
 16.05.2026,Beh k srdcu SNP,Martin,5-21,https://beh.sk/pretek/beh-k-srdcu-snp-58/
-"17.05.2026,Beh 2 míle Bratislava – 5. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-5-kolo-18/"
+17.05.2026,Beh 2 míle Bratislava – 5. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-5-kolo-18/
 23.05.2026,Beh na Inovec,Selec,9,https://beh.sk/pretek/beh-na-inovec-21/
 24.05.2026,Senecký beh zdravia,Senec,3-10,https://beh.sk/pretek/senecky-beh-zdravia-18/
+30.05.2026,Telekom Night Run,Štrbské pleso,5-10,https://register.hakuapp.com/?event=c16c9636fb2771bbd17e
 30.05.2026,Banskobystrický maratón,Banská Bystrica,21-42,https://beh.sk/pretek/banskobystricky-maraton-14/
 31.05.2026,Sky Run,Bratislava,6,https://beh.sk/pretek/sky-run-10/
 06.06.2026,Beh na Martinské hole,Martin,10,https://beh.sk/pretek/beh-na-martinske-hole-15/
@@ -38,7 +39,7 @@
 13.06.2026,Nočný beh Trebišov,Trebišov,5,https://beh.sk/pretek/nocny-beh-trebisov-10/
 14.06.2026,Kysucký maratón,Čadca,21-42,https://beh.sk/pretek/kysucky-maraton-41/
 20.06.2026,Zvolenská korzo desiatka,Zvolen,10,https://beh.sk/pretek/zvolenska-korzo-desiatka-10/
-"21.06.2026,Beh 2 míle Bratislava – 6. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-6-kolo-17/"
+21.06.2026,Beh 2 míle Bratislava – 6. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-6-kolo-17/
 21.06.2026,Goral maratón,Veľká Franková,21-42,https://beh.sk/pretek/goral-maraton-13/
 27.06.2026,Oravský maratón,Dolný Kubín,21-42,https://beh.sk/pretek/oravsky-maraton-15/
 28.06.2026,Donovalský polmaratón,Donovaly,21,https://beh.sk/pretek/donovalsky-polmaraton-12/
@@ -47,23 +48,24 @@
 11.07.2026,Beh zvrchovanosti,Mlynky,10,https://beh.sk/pretek/beh-zvrchovanosti-29/
 12.07.2026,Štiavnický kros,Banská Štiavnica,5-12,https://beh.sk/pretek/stiavnicky-kros-15/
 18.07.2026,Krmešský beh,Kráľová pri Senci,5-10,https://beh.sk/pretek/krmessky-beh-10/
-"19.07.2026,Beh 2 míle Bratislava – 7. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-7-kolo-17/"
+19.07.2026,Beh 2 míle Bratislava – 7. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-7-kolo-17/
 25.07.2026,Beh v srdci domova,Košice,5-10,https://beh.sk/pretek/beh-v-srdci-domova-10/
+25.07.2026,Telekom Night Run,Donovaly,5-10,https://register.hakuapp.com/?event=c20654f599ef4891e7bb
 01.08.2026,Rajecký maratón,Rajec,21-42,https://beh.sk/pretek/rajecky-maraton-42/
 08.08.2026,Night Run Šamorín,Šamorín,5-10,https://beh.sk/pretek/night-run-samorin-10/
 09.08.2026,Hrabovský chodníček,Ružomberok,5,https://beh.sk/pretek/hrabovsky-chodnicek-5/
 15.08.2026,Beh na Chatu pri Zelenom plese,Biela voda - Tatry,8,https://beh.sk/pretek/beh-na-chatu-pri-zelenom-plese-19/
-"16.08.2026,Beh 2 míle Bratislava – 8. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-8-kolo-17/"
+16.08.2026,Beh 2 míle Bratislava – 8. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-8-kolo-17/
 22.08.2026,Čachtický krvavý polmaratón,Čachtice,21,https://beh.sk/pretek/cachticky-krvavy-polmaraton-25/
 29.08.2026,Beh vďaky,Handlová,5-10,https://beh.sk/pretek/beh-vdaky-42/
 30.08.2026,Beh SNP v Kunerade,Kunerad,10,https://beh.sk/pretek/beh-snp-v-kunerade-66/
-05.09.2026,Telekom Night Run,Bratislava,10,https://beh.sk/pretek/telekom-night-run-17/
+05.09.2026,Telekom Night Run,Bratislava,10,https://register.hakuapp.com/?event=4c0e21c5fa748f24e119
 06.09.2026,Beh na Kľak,Fačkov,6,https://beh.sk/pretek/beh-na-klak-10/
 12.09.2026,Karpatský trail,Pezinok,10-21,https://beh.sk/pretek/karpatsky-trail-10/
 13.09.2026,Banskobystrický mestský beh,Banská Bystrica,5-10,https://beh.sk/pretek/banskobystricky-mestsky-beh-13/
 15.09.2026,Beh k sedembolestnej,Bratislava,5,https://beh.sk/pretek/beh-k-sedembolestnej-10/
 19.09.2026,Night Run Lučenec,Lučenec,5-10,https://beh.sk/pretek/night-run-lucenec-10/
-"20.09.2026,Beh 2 míle Bratislava – 9. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-9-kolo-16/"
+20.09.2026,Beh 2 míle Bratislava – 9. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-9-kolo-16/
 20.09.2026,Vrbovská pätnástka,Vrbové,15,https://beh.sk/pretek/vrbovska-patnastka-42/
 26.09.2026,Oktoberfest Run Nitra,Nitra,5,https://beh.sk/pretek/oktoberfest-run-nitra-3/
 27.09.2026,Mariatálsky štvanec,Marianka,6-15,https://beh.sk/pretek/majstrovstva-slovenska-stafiet-v-krose-neregistrovanych-10/
@@ -71,17 +73,18 @@
 04.10.2026,Medzinárodný maratón mieru,Košice,21-42,https://beh.sk/pretek/medzinarodny-maraton-mieru-17/
 11.10.2026,Beh za zdravie – Kuchajda,Bratislava,5,https://beh.sk/pretek/beh-za-zdravie-kuchajda-2/
 17.10.2026,Podvihorlatský kros,Poruba pod Vihorlatom,4-8,https://beh.sk/pretek/podvihorlatsky-kros-3/
-"18.10.2026,Beh 2 míle Bratislava – 10. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-10-kolo-16/"
+18.10.2026,Beh 2 míle Bratislava – 10. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-10-kolo-16/
 18.10.2026,Challenge Airport Run,Prešov,5-10,https://beh.sk/pretek/challenge-airport-run-5/
 24.10.2026,Hrebeňom Považského Inovca,Považský Inovec,25-50,https://beh.sk/pretek/hrebenom-povazskeho-inovca-10/
 25.10.2026,Beh o pohár starostu obce Bošany,Bošany,10,https://beh.sk/pretek/beh-o-pohar-starostu-obce-bosany-10/
 31.10.2026,Halloween Run Bratislava,Bratislava,5,https://beh.sk/pretek/halloween-run-bratislava-10/
-"01.11.2026,Beh 2 míle Bratislava – 11. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-11-kolo-16/"
+01.11.2026,Beh 2 míle Bratislava – 11. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-11-kolo-16/
 07.11.2026,Beh oslobodenia obce Valašská Belá,Valašská Belá,5-10,https://beh.sk/pretek/beh-oslobodenia-obce-valasska-bela-45/
 08.11.2026,Zoborský beh,Nitra,5-10,https://beh.sk/pretek/zoborsky-beh-15/
 14.11.2026,Kros Stupava,Stupava,10-20,https://beh.sk/pretek/kros-stupava-10/
-"15.11.2026,Beh 2 míle Bratislava – 10. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-11-kolo-16/"
-"06.12.2026,Beh 2 míle Bratislava – 10. kolo,Bratislava,""3,2"",https://beh.sk/pretek/beh-2-mile-bratislava-12-kolo-16/"
+15.11.2026,Beh 2 míle Bratislava – 10. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-11-kolo-16/
+06.12.2026,Beh 2 míle Bratislava – 10. kolo,Bratislava,3.2,https://beh.sk/pretek/beh-2-mile-bratislava-12-kolo-16/
 31.12.2026,Horovská desiatka,Horovce (okr. Michalovce),10,https://beh.sk/pretek/horovska-desiatka-17/
 31.12.2026,Silvestrovský beh Prešov,Prešov,4-7,https://beh.sk/pretek/silvestrovsky-beh-presov-16/
 31.12.2026,Beh mostami,Bratislava,10,
+
