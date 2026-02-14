@@ -362,9 +362,7 @@ const ersteRoute = [
     { city:"Varšava",    country:"Poľsko",     flag:"🇵🇱", km:3133,
       mapX:55, mapY:6,
       runFact:"Inaugurachy Maraton mieru v roku 1979 meral iba 40,6 km, nie oficialnych 42,195 km. Dnes je plnohodnotnym maratorom.",
-      ersteFact:"Erste Group expanduje na polskom trhu v strednej Europe" },
-
-    {city:"Bratislava",   country:"Slovensko",   flag:"🇸🇰", km:3740,}
+      ersteFact:"Erste Group expanduje na polskom trhu v strednej Europe" }
 
 ];
 
@@ -412,9 +410,8 @@ async function loadRaces() {
             const p  = line.split(',').map(s => s.trim());
             const tr = document.createElement('tr');
             if (p[1] && p[1].includes('Od Tatier')) tr.className = 'race-highlight';
-            const linkHtml = (p[4] && p[4].startsWith('http'))
-                ? '<a href="' + p[4] + '" target="_blank">Link</a>' : '—';
-            tr.innerHTML = '<td>'+(p[0]||'')+'</td><td>'+(p[1]||'')+'</td><td>'+(p[2]||'')+'</td><td>'+(p[3]||'')+'</td><td>'+linkHtml+'</td>';
+            const linkHtml = (p[5] && p[5] !== '#') ? `<a href="${p[5]}" target="_blank">Link</a>` : '—';
+            tr.innerHTML = `<td>${p[0]||''}</td><td>${p[1]||''}</td><td>${p[2]||''}</td><td>${p[3]||''}</td><td>${p[4]||''}</td><td>${linkHtml}</td>`;
             tbody.appendChild(tr);
         });
         document.getElementById('calendarLoading').style.display = 'none';
