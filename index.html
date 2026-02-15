@@ -304,13 +304,14 @@ var monthMap = {
 };
 
 function isChallengeOpen(c) {
-    var now   = new Date();
-    var year  = now.getFullYear();
-    var month = now.getMonth() + 1; // 1-12
-    var openMonth = monthMap[c.month] || 1;
+    return true;  // TESTOVANIE - vsetky vyzvy otvorene
+    // var now   = new Date();
+    // var year  = now.getFullYear();
+    // var month = now.getMonth() + 1; // 1-12
+    // var openMonth = monthMap[c.month] || 1;
     // Otvára sa 1. deň daného mesiaca roku 2026
-    var openDate = new Date(2026, openMonth - 1, 1);
-    return now >= openDate;
+    // var openDate = new Date(2026, openMonth - 1, 1);
+    // return now >= openDate;
 }
 
 var challenges = [
