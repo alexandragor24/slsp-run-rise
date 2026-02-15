@@ -79,6 +79,10 @@
         .not-evaluated { text-align: center; padding: 28px 16px; color: #64748B; }
         .not-evaluated .icon { font-size: 2.8em; margin-bottom: 12px; }
         .not-evaluated p { font-weight: 600; color: #475569; margin-bottom: 6px; font-size: 1.05em; }
+        .password-area { margin-top: 18px; text-align: center; }
+        .password-input { padding: 10px 16px; border: 2px solid #E2E8F0; border-radius: 10px; font-size: 1em; width: 220px; outline: none; transition: border-color 0.2s; }
+        .password-input:focus { border-color: #8B5CF6; }
+        .password-error { color: #DC2626; font-size: 0.85em; margin-top: 8px; display: none; }
         .city-popup-title { font-size: 1.5em; font-weight: 800; color: #1F2937; margin-bottom: 16px; }
         .city-popup-section { margin-bottom: 14px; }
         .city-popup-label { font-weight: 700; color: #8B5CF6; font-size: 0.9em; margin-bottom: 5px; }
@@ -118,13 +122,13 @@
         .city-distance { font-size: 0.8em; opacity: 0.8; font-weight: 600; }
         .city-status { margin-top: 7px; font-size: 1.1em; }
         .lap-badge { display: inline-block; background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.5); border-radius: 20px; padding: 2px 8px; font-size: 0.7em; font-weight: 700; margin-top: 4px; }
-        .spin-btn { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; border: none; padding: 14px 38px; border-radius: 14px; font-size: 1.15em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .spin-btn { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; border: none; padding: 14px 38px; border-radius: 14px; font-size: 1.15em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 12px; }
         .spin-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(245,158,11,0.4); }
         .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .roulette-wheel { width: 280px; height: 280px; margin: 25px auto; border-radius: 50%; border: 14px solid #F59E0B; display: flex; align-items: center; justify-content: center; background: white; font-size: 1.4em; font-weight: 800; color: #92400E; box-shadow: 0 10px 30px rgba(245,158,11,0.3); }
+        .roulette-wheel { width: 200px; height: 200px; margin: 15px auto; border-radius: 50%; border: 14px solid #F59E0B; display: flex; align-items: center; justify-content: center; background: white; font-size: 1.2em; font-weight: 800; color: #92400E; box-shadow: 0 10px 30px rgba(245,158,11,0.3); }
         .roulette-wheel.spinning { animation: spin 3s cubic-bezier(0.25,0.1,0.25,1); }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(1800deg); } }
-        .roulette-result { padding: 18px; word-break: break-word; max-width: 220px; text-align: center; }
+        .roulette-result { padding: 14px; word-break: break-word; max-width: 160px; text-align: center; }
         .loading { text-align: center; color: #8B5CF6; padding: 25px; font-weight: 600; }
         .error-msg { text-align: center; color: #DC2626; padding: 18px; background: #FEE2E2; border-radius: 10px; margin: 15px 0; }
         @media (max-width: 768px) {
@@ -266,6 +270,12 @@
 </div>
 
 <script>
+
+// ============================================================
+// HESLO PRE ŽREBOVANIE — zmeň na čokoľvek chceš
+// ============================================================
+var DRAW_PASSWORD = 'runrise2026';
+
 function showSection(id, el) {
     document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
     document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
@@ -295,9 +305,6 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ============================================================
-// Mesiac → číslo (1-12) pre porovnanie s aktuálnym dátumom
-// ============================================================
 var monthMap = {
     'Marec': 3, 'Apríl': 4, 'Máj': 5, 'Jún': 6,
     'Júl': 7, 'August': 8, 'September': 9
@@ -305,13 +312,9 @@ var monthMap = {
 
 function isChallengeOpen(c) {
     return true;  // TESTOVANIE - vsetky vyzvy otvorene
-    // var now   = new Date();
-    // var year  = now.getFullYear();
-    // var month = now.getMonth() + 1; // 1-12
     // var openMonth = monthMap[c.month] || 1;
-    // Otvára sa 1. deň daného mesiaca roku 2026
-    // var openDate = new Date(2026, openMonth - 1, 1);
-    // return now >= openDate;
+    // var openDate  = new Date(2026, openMonth - 1, 1);
+    // return new Date() >= openDate;
 }
 
 var challenges = [
@@ -358,10 +361,8 @@ var ersteRoute = [
       ersteFact:'Erste Group expanduje na polskom trhu v strednej Europe' }
 ];
 
-// Bratislava CIEĽ — zobrazená v kachliciach ako posledná, nie na mape
 var finishCity = {
     city:'Bratislava', country:'Slovensko', flag:'🇸🇰', km:3740,
-    isFinish: true,
     runFact:'Vitaj späť doma! Celý okruh Erste Group — 3 740 km — dokončený. Gratulujeme!',
     ersteFact:'Slovenská sporiteľňa je domovom projektu Run & Rise.'
 };
@@ -395,6 +396,21 @@ async function loadStats() {
     }
 }
 
+// ============================================================
+// CSV PARSER — správne spracuje úvodzovky z Excelu
+// ============================================================
+function parseCSVLine(line) {
+    var result = [], cur = '', inQ = false;
+    for (var i = 0; i < line.length; i++) {
+        var ch = line[i];
+        if (ch === '"') { inQ = !inQ; }
+        else if (ch === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+        else { cur += ch; }
+    }
+    result.push(cur.trim());
+    return result;
+}
+
 async function loadRaces() {
     try {
         var r = await fetch('data_races.csv');
@@ -405,7 +421,7 @@ async function loadRaces() {
         tbody.innerHTML = '';
         lines.forEach(function(line) {
             if (!line.trim()) return;
-            var p  = line.split(',').map(function(s) { return s.trim(); });
+            var p  = parseCSVLine(line);
             var tr = document.createElement('tr');
             if (p[1] && p[1].includes('Od Tatier')) tr.className = 'race-highlight';
             var linkHtml = (p[4] && p[4].startsWith('http'))
@@ -435,7 +451,7 @@ async function loadLeaderboard() {
         var kmArr = [], minArr = [];
         lines.forEach(function(line) {
             if (!line.trim()) return;
-            var parts = line.split(',').map(function(s) { return s.trim(); });
+            var parts = parseCSVLine(line);
             var name = parts[0], km = parts[1], mins = parts[2];
             if (name && km && mins) {
                 kmArr.push({ name: name, value: parseFloat(km) });
@@ -463,16 +479,11 @@ async function loadChallengeWinners() {
     } catch(e) { challengeWinners = {}; }
 }
 
-// ============================================================
-// VÝZVY — s postupným odkrývaním podľa mesiaca
-// ============================================================
 function renderChallenges() {
     document.getElementById('challengesGrid').innerHTML = challenges.map(function(c, i) {
-        var typeClass = (c.type === 'Tematicka') ? 'thematic' : 'performance';
-        var open = isChallengeOpen(c);
-        var openMonth = monthMap[c.month] || 1;
-        var openDateStr = '1. ' + c.month + ' 2026';
-
+        var typeClass    = (c.type === 'Tematicka') ? 'thematic' : 'performance';
+        var open         = isChallengeOpen(c);
+        var openDateStr  = '1. ' + c.month + ' 2026';
         if (open) {
             return '<div class="challenge-card" onclick="openWinnersPopup(' + i + ')">' +
                 '<div class="challenge-header">' +
@@ -515,14 +526,18 @@ async function openWinnersPopup(i) {
     var html = '<div class="popup-title">' + c.title + '</div>' +
                '<div class="popup-month">' + c.month + ' · ' + c.label + '</div>';
 
+    // Ak je výzva už vyžrebovaná — zobraz víťazky
     if (w && w.length > 0) {
-        html += '<ul class="winners-list">' + w.map(function(name) { return '<li>' + name + '</li>'; }).join('') + '</ul>';
+        html += '<ul class="winners-list">' +
+            w.map(function(name) { return '<li>' + name + '</li>'; }).join('') +
+            '</ul>';
         document.getElementById('winnersPopupContent').innerHTML = html;
         document.getElementById('winnersPopup').classList.add('show');
         document.getElementById('winnersOverlay').classList.add('show');
         return;
     }
 
+    // Načítaj CSV s účastníčkami
     try {
         var r = await fetch(c.csvFile);
         if (!r.ok) throw new Error('no file');
@@ -530,14 +545,25 @@ async function openWinnersPopup(i) {
         var lines = text.split('\n');
         var first = lines[0].trim().toLowerCase();
         var start = (first === 'meno' || first === 'name') ? 1 : 0;
-        currentParticipants = lines.slice(start).map(function(l) { return l.trim(); }).filter(function(n) { return n.length > 0; });
+        currentParticipants = lines.slice(start)
+            .map(function(l) { return l.trim(); })
+            .filter(function(n) { return n.length > 0; });
 
         if (currentParticipants.length > 0) {
+            // Účastníčky existujú — zobraz počet + formulár s heslom
             html += '<div style="text-align:center;margin:20px 0;">' +
-                '<p style="color:#78350F;font-weight:600;margin-bottom:15px;">Počet účastníčok: ' + currentParticipants.length + '</p>' +
-                '<div class="roulette-wheel" id="popupRouletteWheel" style="width:200px;height:200px;margin:15px auto;">' +
-                '<span class="roulette-result" id="popupRouletteResult">?</span></div>' +
-                '<button class="spin-btn" onclick="spinChallengeRoulette()" id="popupSpinBtn">🎲 Žrebovať víťazku!</button>' +
+                '<p style="color:#475569;font-weight:600;margin-bottom:10px;">Počet účastníčok: ' + currentParticipants.length + '</p>' +
+                '<div class="roulette-wheel" id="popupRouletteWheel">' +
+                '<span class="roulette-result" id="popupRouletteResult">?</span>' +
+                '</div>' +
+                '<div class="password-area" id="passwordArea">' +
+                '<p style="color:#64748B;font-size:0.9em;margin-bottom:10px;">Pre spustenie žrebovania zadaj heslo:</p>' +
+                '<input type="password" id="drawPassword" class="password-input" placeholder="Heslo" ' +
+                'onkeydown="if(event.key===\'Enter\') checkPasswordAndSpin()" />' +
+                '<br>' +
+                '<button class="spin-btn" onclick="checkPasswordAndSpin()">🎲 Žrebovať víťazku!</button>' +
+                '<div class="password-error" id="passwordError">Nesprávne heslo, skús znova.</div>' +
+                '</div>' +
                 '</div>';
         } else {
             html += '<div class="not-evaluated"><div class="icon">⏳</div>' +
@@ -554,13 +580,29 @@ async function openWinnersPopup(i) {
     document.getElementById('winnersOverlay').classList.add('show');
 }
 
+// ============================================================
+// KONTROLA HESLA — skryje formulár a spustí koleso
+// ============================================================
+function checkPasswordAndSpin() {
+    var input = document.getElementById('drawPassword');
+    var error = document.getElementById('passwordError');
+    if (!input) return;
+    if (input.value === DRAW_PASSWORD) {
+        error.style.display = 'none';
+        document.getElementById('passwordArea').style.display = 'none';
+        spinChallengeRoulette();
+    } else {
+        error.style.display = 'block';
+        input.value = '';
+        input.focus();
+    }
+}
+
 function spinChallengeRoulette() {
     if (!currentParticipants.length || isSpinning) return;
     isSpinning = true;
     var wheel  = document.getElementById('popupRouletteWheel');
     var result = document.getElementById('popupRouletteResult');
-    var btn    = document.getElementById('popupSpinBtn');
-    btn.disabled = true;
     wheel.classList.add('spinning');
     result.textContent = '...';
     var counter = 0;
@@ -573,7 +615,6 @@ function spinChallengeRoulette() {
         result.textContent = winner;
         wheel.classList.remove('spinning');
         isSpinning = false;
-        btn.disabled = false;
         setTimeout(function() {
             var ch = challenges[currentChallengeIndex];
             var confirmed = confirm('VITAZKA:\n' + winner + '\n\nUlozit vysledok?');
@@ -587,15 +628,14 @@ function spinChallengeRoulette() {
 function closeWinnersPopup() {
     document.getElementById('winnersPopup').classList.remove('show');
     document.getElementById('winnersOverlay').classList.remove('show');
+    currentParticipants = [];
+    isSpinning = false;
 }
 
-// ============================================================
-// JOURNEY — s podporou viacerých kôl
-// ============================================================
 function getLapInfo(totalKm) {
-    var lap      = Math.floor(totalKm / TOTAL_KM) + 1;  // aktuálne kolo (1-based)
-    var kmInLap  = totalKm % TOTAL_KM;                   // km v aktuálnom kole
-    var completed = Math.floor(totalKm / TOTAL_KM);      // dokončené celé kolá
+    var lap       = Math.floor(totalKm / TOTAL_KM) + 1;
+    var kmInLap   = totalKm % TOTAL_KM;
+    var completed = Math.floor(totalKm / TOTAL_KM);
     return { lap: lap, kmInLap: kmInLap, completed: completed };
 }
 
@@ -613,20 +653,18 @@ function countCountries(kmInLap) {
 }
 
 function updateJourney() {
-    var totalKm  = statsData.kilometers;
-    var info     = getLapInfo(totalKm);
-    var kmInLap  = info.kmInLap;
-    var lap      = info.lap;
-    var pct      = Math.min((kmInLap / TOTAL_KM) * 100, 100);
+    var totalKm = statsData.kilometers;
+    var info    = getLapInfo(totalKm);
+    var kmInLap = info.kmInLap;
+    var lap     = info.lap;
+    var pct     = Math.min((kmInLap / TOTAL_KM) * 100, 100);
 
     document.getElementById('journeyKm').textContent      = totalKm.toFixed(1) + ' km';
     document.getElementById('journeyPercent').textContent  = pct.toFixed(1) + '%';
     document.getElementById('journeyCities').textContent   = countCountries(kmInLap) + '/8';
     document.getElementById('journeyLap').textContent      = getLapLabel(lap);
 
-    // Ak je dokončených viac ako 0 kôl, zobrazíme info
     var lapSuffix = info.completed > 0 ? ' (kolo ' + lap + ')' : '';
-
     var curIdx = 0;
     for (var i = 0; i < ersteRoute.length; i++) {
         if (kmInLap >= ersteRoute[i].km) curIdx = i;
@@ -634,7 +672,7 @@ function updateJourney() {
     var cur  = ersteRoute[curIdx];
     var next = ersteRoute[curIdx + 1];
 
-    if (kmInLap >= TOTAL_KM || kmInLap === 0 && lap > 1) {
+    if (kmInLap >= TOTAL_KM || (kmInLap === 0 && lap > 1)) {
         document.getElementById('journeyLocationText').textContent = getLapLabel(lap) + ' — Štart v Bratislave!';
         document.getElementById('journeyNextText').textContent     = 'Budapešť — este 184 km';
         document.getElementById('journeyNext').style.display = 'block';
@@ -647,7 +685,6 @@ function updateJourney() {
         document.getElementById('journeyNext').style.display = 'none';
     }
 
-    // Mapa — markery podľa kmInLap
     var overlay = document.getElementById('journeyMapOverlay');
     overlay.innerHTML = '';
     ersteRoute.forEach(function(city, idx) {
@@ -664,7 +701,6 @@ function updateJourney() {
         overlay.appendChild(m);
     });
 
-    // Kachlicky — 8 miest + Bratislava CIEĽ na konci
     var allCards = ersteRoute.map(function(city, idx) {
         var status = 'locked', icon = '🔒';
         if (kmInLap >= city.km) { status = 'completed'; icon = '✅'; }
@@ -680,14 +716,12 @@ function updateJourney() {
             '<div class="city-km-label">od štartu</div>' +
             '<div class="city-distance">' + city.km + ' km</div>' +
             '<div class="city-status">' + icon + '</div>' +
-            lapBadge +
-            '</div>';
+            lapBadge + '</div>';
     });
 
-    // Finish kachlička — Bratislava cieľ
-    var finishStatus = (kmInLap >= TOTAL_KM || info.completed > 0) ? 'finish' : 'locked';
-    var finishIcon   = (kmInLap >= TOTAL_KM || info.completed > 0) ? '🏁' : '🔒';
-    var finishLap    = info.completed > 0 ? '<div class="lap-badge">x' + info.completed + ' kolo</div>' : '';
+    var finishStatus = (info.completed > 0) ? 'finish' : 'locked';
+    var finishIcon   = (info.completed > 0) ? '🏁' : '🔒';
+    var finishLap    = info.completed > 0 ? '<div class="lap-badge">' + info.completed + 'x dokoncene</div>' : '';
     allCards.push(
         '<div class="city-card ' + finishStatus + '" onclick="openFinishPopup()">' +
         '<div class="city-flag">🇸🇰</div>' +
@@ -695,8 +729,7 @@ function updateJourney() {
         '<div class="city-km-label">cieľ okruhu</div>' +
         '<div class="city-distance">3 740 km</div>' +
         '<div class="city-status">' + finishIcon + '</div>' +
-        finishLap +
-        '</div>'
+        finishLap + '</div>'
     );
 
     document.getElementById('citiesGrid').innerHTML = allCards.join('');
