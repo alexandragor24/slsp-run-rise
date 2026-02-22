@@ -1,1 +1,40 @@
+name: Update Strava Leaderboard
 
+on:
+  schedule:
+    - cron: '0 21 * * *'  # Každý deň o 21:00 UTC (22:00 CET / 23:00 CEST)
+  workflow_dispatch:  # Možnosť spustiť manuálne
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r scripts/requirements.txt
+      
+      - name: Run update script
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+          STRAVA_CLUB_ID: ${{ secrets.STRAVA_CLUB_ID }}
+        run: |
+          python scripts/update_strava_leaderboard.py
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data_leaderboard.csv data_stats.json weekly_snapshot.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Update leaderboard from Strava"
+          git push
