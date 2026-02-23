@@ -124,11 +124,25 @@ def main():
     weekly_stats = defaultdict(lambda: {'km': 0, 'mins': 0})
     
     for activity in activities:
-        activity_date = datetime.fromisoformat(activity['athlete']['created_at'].replace('Z', '+00:00'))
+        # Získaj dátum aktivity
+        activity_date_str = activity.get('start_date_local') or activity.get('start_date')
+        if not activity_date_str:
+            continue
+        
+        # Parse datetime (odstráň 'Z' alebo časové pásmo)
+        try:
+            activity_date = datetime.fromisoformat(activity_date_str.replace('Z', '').replace('+00:00', ''))
+        except:
+            continue
+        
         if activity_date >= week_start:
-            name = f"{activity['athlete']['firstname']} {activity['athlete']['lastname']}"
-            distance_km = activity['distance'] / 1000  # meters to km
-            moving_time_mins = activity['moving_time'] // 60  # seconds to minutes
+            athlete = activity.get('athlete', {})
+            firstname = athlete.get('firstname', 'Unknown')
+            lastname = athlete.get('lastname', '')
+            name = f"{firstname} {lastname}".strip()
+            
+            distance_km = activity.get('distance', 0) / 1000  # meters to km
+            moving_time_mins = activity.get('moving_time', 0) // 60  # seconds to minutes
             
             weekly_stats[name]['km'] += distance_km
             weekly_stats[name]['mins'] += moving_time_mins
