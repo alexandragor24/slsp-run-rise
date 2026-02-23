@@ -62,8 +62,11 @@ def load_weekly_snapshot():
     """Načítaj týždenný snapshot (pre výpočet denného prírastku)"""
     try:
         with open('weekly_snapshot.json', 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
+            content = f.read().strip()
+            if not content:
+                return {}
+            return json.loads(content)
+    except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
 def save_weekly_snapshot(data):
@@ -120,6 +123,14 @@ def main():
     # 3. Filtruj len aktivity z aktuálneho týždňa
     week_start = get_week_start()
     print(f"📅 Week starts: {week_start.strftime('%Y-%m-%d')}")
+    
+    # DEBUG: Zobraz prvých 5 aktivít
+    print("🔍 Sample activity dates:")
+    for i, activity in enumerate(activities[:5]):
+        date_str = activity.get('start_date_local') or activity.get('start_date', 'N/A')
+        athlete = activity.get('athlete', {})
+        name = f"{athlete.get('firstname', '?')} {athlete.get('lastname', '')}"
+        print(f"  {i+1}. {date_str} - {name}")
     
     weekly_stats = defaultdict(lambda: {'km': 0, 'mins': 0})
     
