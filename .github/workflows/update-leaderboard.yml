@@ -2,8 +2,11 @@ name: Update Strava Leaderboard
 
 on:
   schedule:
-    - cron: '0 21 * * *'  # Každý deň o 21:00 UTC (22:00 CET / 23:00 CEST)
-  workflow_dispatch:  # Možnosť spustiť manuálne
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update:
