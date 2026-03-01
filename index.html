@@ -547,7 +547,7 @@ async function openWinnersPopup(i) {
         var start = (first === 'meno' || first === 'name') ? 1 : 0;
         currentParticipants = lines.slice(start)
             .map(function(l) { return l.trim(); })
-            .filter(function(n) { return n.length > 0; });
+            .filter(function(n) { return n.length > 0 && n.toLowerCase() !== 'meno' && n.toLowerCase() !== 'name'; });
 
         if (currentParticipants.length > 0) {
             // Účastníčky existujú — zobraz počet + formulár s heslom
