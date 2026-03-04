@@ -30,6 +30,8 @@
         .stat-number { font-size: 3.4em; font-weight: 900; margin-bottom: 8px; }
         .stat-subtitle { opacity: 0.9; font-size: 1.05em; margin-top: 8px; line-height: 1.5; }
         .countdown-time { font-size: 1.5em; font-weight: 800; letter-spacing: 1px; margin-top: 6px; }
+        .last-update { text-align: center; color: #64748B; font-size: 0.9em; margin-top: 20px; padding: 12px; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px); }
+        .last-update strong { color: #1F2937; font-weight: 700; }
         .race-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .race-table th { background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; padding: 14px 16px; text-align: left; font-weight: 700; }
         .race-table th:first-child { border-radius: 12px 0 0 0; }
@@ -179,6 +181,9 @@
                 <div class="countdown-time" id="countdownTime">--:--:--</div>
                 <div class="stat-subtitle">do dm ženského behu<br>19. septembra 2026</div>
             </div>
+        </div>
+        <div class="last-update">
+            📊 Posledná aktualizácia údajov: <strong id="lastUpdateDate">—</strong>
         </div>
     </section>
 
@@ -355,7 +360,7 @@ var ersteRoute = [
       ersteFact:'Erste Financial Life Park, alebo skrátene FLiP, je najvýznamnejší rakúsky projekt finančného vzdelávania. FLiP ponúka organizované interaktívne prehliadky, ktoré podporujú finančnú gramotnosť a dôležitosť financií pre plánovanie osobného života zábavným a interaktívnym spôsobom.' },
     { city:'Praha',      country:'Česko',      flag:'🇨🇿', km:2553, mapX:12, mapY:31,
       runFact:'RunCzech udeľuje titul PIM King a PIM Queen tým, ktorí dokončili 15 pražských maratónov. Prvou a jedinou PIM Queen bola Věra Vavrejnová.',
-      ersteFact:'Česká sporitelna je lídrom digitálneho bankovníctva v Česku. V roku 2025 zvíťazila v troch kategóriach VISA AWARDS a jednou z kategórii bola digitálna ponuka.' },
+      ersteFact:'Česká sporitelna je lídrom digitálneho bankovníctva v Česku. V roku 2025 zvíťazila v troch kategóriách VISA AWARDS a jednou z kategórii bola digitálna ponuka.' },
     { city:'Varšava',    country:'Poľsko',     flag:'🇵🇱', km:3133, mapX:55, mapY:6,
       runFact:'Inauguračný Maratón mieru v roku 1979 meral iba 40,6 km, nie oficiálnych 42,195 km. Dnes je plnohodnotným maratónom.',
       ersteFact:'Erste Group v januári 2026 úspešne dokončila akvizíciu 49 % kontrolného podielu v Santander Bank Polska.' }
@@ -390,9 +395,35 @@ async function loadStats() {
         document.getElementById('totalRunners').textContent = statsData.runners;
         document.getElementById('totalKm').textContent      = statsData.kilometers.toFixed(1);
         updateJourney();
+        
+        // Načítaj dátum posledného commitu z GitHubu
+        fetchLastCommitDate();
     } catch(e) {
         document.getElementById('totalRunners').textContent = '—';
         document.getElementById('totalKm').textContent      = '—';
+    }
+}
+
+// ============================================================
+// AUTOMATICKÝ DÁTUM Z GITHUB API
+// ============================================================
+async function fetchLastCommitDate() {
+    try {
+        var response = await fetch('https://api.github.com/repos/alexandragor24/slsp-run-rise/commits/main');
+        if (!response.ok) throw new Error('GitHub API error');
+        
+        var data = await response.json();
+        var commitDate = new Date(data.commit.author.date);
+        
+        var options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        var formatted = commitDate.toLocaleDateString('sk-SK', options);
+        
+        document.getElementById('lastUpdateDate').textContent = formatted;
+    } catch(e) {
+        var today = new Date();
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        var formatted = today.toLocaleDateString('sk-SK', options);
+        document.getElementById('lastUpdateDate').textContent = formatted;
     }
 }
 
@@ -526,7 +557,6 @@ async function openWinnersPopup(i) {
     var html = '<div class="popup-title">' + c.title + '</div>' +
                '<div class="popup-month">' + c.month + ' · ' + c.label + '</div>';
 
-    // Ak je výzva už vyžrebovaná — zobraz víťazky
     if (w && w.length > 0) {
         html += '<ul class="winners-list">' +
             w.map(function(name) { return '<li>' + name + '</li>'; }).join('') +
@@ -537,7 +567,6 @@ async function openWinnersPopup(i) {
         return;
     }
 
-    // Načítaj CSV s účastníčkami
     try {
         var r = await fetch(c.csvFile);
         if (!r.ok) throw new Error('no file');
@@ -550,7 +579,6 @@ async function openWinnersPopup(i) {
             .filter(function(n) { return n.length > 0 && n.toLowerCase() !== 'meno' && n.toLowerCase() !== 'name'; });
 
         if (currentParticipants.length > 0) {
-            // Účastníčky existujú — zobraz počet + formulár s heslom
             html += '<div style="text-align:center;margin:20px 0;">' +
                 '<p style="color:#475569;font-weight:600;margin-bottom:10px;">Počet účastníčok: ' + currentParticipants.length + '</p>' +
                 '<div class="roulette-wheel" id="popupRouletteWheel">' +
@@ -580,9 +608,6 @@ async function openWinnersPopup(i) {
     document.getElementById('winnersOverlay').classList.add('show');
 }
 
-// ============================================================
-// KONTROLA HESLA — skryje formulár a spustí koleso
-// ============================================================
 function checkPasswordAndSpin() {
     var input = document.getElementById('drawPassword');
     var error = document.getElementById('passwordError');
@@ -773,3 +798,21 @@ function closeCityPopup() {
 </script>
 </body>
 </html>
+```
+
+---
+
+## ✅ Čo sa zmenilo:
+
+1. ✅ **Pridaný CSS** pre `.last-update` (riadok 29)
+2. ✅ **Pridaný HTML element** na domovskej stránke (riadok 185)
+3. ✅ **Pridaná funkcia `fetchLastCommitDate()`** (riadok 305)
+4. ✅ **Zavolaná funkcia** v `loadStats()` (riadok 302)
+
+---
+
+## 📊 Výsledok:
+
+Na domovskej stránke sa automaticky zobrazí:
+```
+📊 Posledná aktualizácia údajov: 4. marca 2025, 21:47
