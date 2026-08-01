@@ -125,12 +125,13 @@
         .spin-btn { background: linear-gradient(135deg, #F59E0B, #EA580C); color: white; border: none; padding: 14px 38px; border-radius: 14px; font-size: 1.15em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 12px; }
         .spin-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(245,158,11,0.4); }
         .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .roulette-wheel { width: 200px; height: 200px; margin: 15px auto; border-radius: 50%; border: 14px solid #F59E0B; display: flex; align-items: center; justify-content: center; background: white; font-size: 1.2em; font-weight: 800; color: #92400E; box-shadow: 0 10px 30px rgba(245,158,11,0.3); }
+        .roulette-wheel { width: 200px; height: 200px; margin: 15px auto; border-radius: 50%; border: 14px solid #F59E0B; display: flex; align-items: center; justify-content: center; background: white; font-size: 1.1em; font-weight: 800; color: #92400E; box-shadow: 0 10px 30px rgba(245,158,11,0.3); }
         .roulette-wheel.spinning { animation: spin 3s cubic-bezier(0.25,0.1,0.25,1); }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(1800deg); } }
-        .roulette-result { padding: 14px; word-break: break-word; max-width: 160px; text-align: center; }
+        .roulette-result { padding: 14px; word-break: break-word; max-width: 165px; text-align: center; }
         .loading { text-align: center; color: #8B5CF6; padding: 25px; font-weight: 600; }
         .error-msg { text-align: center; color: #DC2626; padding: 18px; background: #FEE2E2; border-radius: 10px; margin: 15px 0; }
+        .winner-count-hint { color: #94A3B8; font-size: 0.8em; margin-bottom: 6px; }
         @media (max-width: 768px) {
             .nav-container { flex-direction: column; align-items: center; }
             .nav-menu { justify-content: center; }
@@ -305,9 +306,21 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+// ============================================================
+// MAPA MESIACOV — kedy sa výzva otvára (číslo mesiaca 1-12)
+// ============================================================
 var monthMap = {
-    'Marec': 3, 'Apríl': 4, 'Máj': 5, 'Jún': 6,
-    'Júl': 7, 'August': 8, 'September': 9
+    'Marec': 3, 'Máj': 5, 'Jún': 6,
+    'Leto': 7, 'September': 9
+};
+
+// Pekné texty pre "Otvára sa ..." pod zamknutou výzvou
+var monthOpenLabel = {
+    'Marec': '1. marca 2026',
+    'Máj': '1. mája 2026',
+    'Jún': '1. júna 2026',
+    'Leto': '1. júla 2026',
+    'September': '1. septembra 2026'
 };
 
 function isChallengeOpen(c) {
@@ -317,19 +330,23 @@ function isChallengeOpen(c) {
     return new Date() >= openDate;
 }
 
+// ============================================================
+// VÝZVY
+// winnerCount = koľko víťazok sa žrebuje (predvolene 1, ak nie je uvedené)
+// ============================================================
 var challenges = [
     { month:'Marec',     type:'Tematicka',  label:'Tematická',  title:'Fresh Start Challenge',     desc:'6 dní s aktivitou (beh)',                                                            csvFile:'participants_marec_thematic.csv' },
     { month:'Marec',     type:'Vykonova',   label:'Výkonová',   title:'Base Builder',              desc:'Odbehni 50 km za mesiac',                                                            csvFile:'participants_marec_performance.csv' },
-    { month:'Apríl',     type:'Tematicka',  label:'Tematická',  title:'Spring Awakening',          desc:'Odbehni 3 behy v prírode (les/park/lúka)',                                           csvFile:'participants_april_thematic.csv' },
-    { month:'Apríl',     type:'Vykonova',   label:'Výkonová',   title:'Tempo & Power',             desc:'Odbehni 4 interválové behy a jeden beh do kopca',                                                         csvFile:'participants_april_performance.csv' },
-    { month:'Máj',       type:'Tematicka',  label:'Tematická',  title:'Buddy Boost',               desc:'Za beh vo dvojici/skupinke kolegyniek získaš lístok do žrebovania',                  csvFile:'participants_maj_thematic.csv' },
-    { month:'Máj',       type:'Vykonova',   label:'Výkonová',   title:'Progress Challenge',        desc:'Absolvuj raz týždenne iný typ tréningu a buduj svoju silu',                          csvFile:'participants_maj_performance.csv' },
+
+    { month:'Máj',       type:'Tematicka',  label:'Tematická',  title:'Buddy Boost',               desc:'Za beh vo dvojici/skupinke kolegyniek získaš lístok do žrebovania',                  csvFile:'participants_maj_thematic.csv',   winnerCount:2 },
+    { month:'Máj',       type:'Vykonova',   label:'Výkonová',   title:'Progress Challenge',        desc:'Absolvuj raz týždenne iný typ tréningu a buduj svoju silu',                          csvFile:'participants_maj_performance.csv', winnerCount:2 },
+
     { month:'Jún',       type:'Tematicka',  label:'Tematická',  title:'Sunrise Challenge',         desc:'Daj si ranný beh pred 7:00 a zdieľaj fotku z východu slnka (Strava alebo Viva Engage skupina)',                                   csvFile:'participants_jun_thematic.csv' },
     { month:'Jún',       type:'Vykonova',   label:'Výkonová',   title:'Early Summer Intervals',    desc:'Absolvuj 2 ranné intervalové behy podľa tvojej úrovne (v čase 05:00–10:00)',                       csvFile:'participants_jun_performance.csv' },
-    { month:'Júl',       type:'Tematicka',  label:'Tematická',  title:'Trail Moment',              desc:'Nabehaj aspoň 100 výškových metrov na jednom behu alebo túra + fotka',               csvFile:'participants_jul_thematic.csv' },
-    { month:'Júl',       type:'Vykonova',   label:'Výkonová',   title:'Hills Challenge',           desc:'Absolvuj min. 3 behy do kopcov alebo trail behy + 2 core tréningy',                  csvFile:'participants_jul_performance.csv' },
-    { month:'August',    type:'Tematicka',  label:'Tematická',  title:'Summer Explorer',           desc:'Bež v novom/cudzom meste počas dovolenky a zdieľaj fotku + 1 jóga/mobility',         csvFile:'participants_august_thematic.csv' },
-    { month:'August',    type:'Vykonova',   label:'Výkonová',   title:'Long Run Month',            desc:'Absolvuj min. 4 dlhé behy (60–90 min) + 1 jóga/mobility',                            csvFile:'participants_august_performance.csv' },
+
+    { month:'Leto',      type:'Tematicka',  label:'Tematická',  title:'Trail Moment',              desc:'Nabehaj aspoň 100 výškových metrov na jednom behu alebo túra + fotka',               csvFile:'participants_jul_thematic.csv',       winnerCount:2 },
+    { month:'Leto',      type:'Vykonova',   label:'Výkonová',   title:'Long Run Month',            desc:'Absolvuj min. 4 dlhé behy (60–90 min) + 1 jóga/mobility',                            csvFile:'participants_august_performance.csv', winnerCount:2 },
+
     { month:'September', type:'Tematicka',  label:'Tematická',  title:'Together We Finish Strong', desc:'Zúčastni sa dm ženského behu ALEBO bež virtuálne v ten istý deň!',                   csvFile:'participants_september_thematic.csv' },
     { month:'September', type:'Vykonova',   label:'Výkonová',   title:'Season Finale Challenge',   desc:'Prekonaj svoj najlepší výkon z celého roka — záverečný beh sezóny!',                  csvFile:'participants_september_performance.csv' }
 ];
@@ -483,7 +500,7 @@ function renderChallenges() {
     document.getElementById('challengesGrid').innerHTML = challenges.map(function(c, i) {
         var typeClass    = (c.type === 'Tematicka') ? 'thematic' : 'performance';
         var open         = isChallengeOpen(c);
-        var openDateStr  = '1. ' + c.month + ' 2026';
+        var openDateStr  = monthOpenLabel[c.month] || ('1. ' + c.month + ' 2026');
         if (open) {
             return '<div class="challenge-card" onclick="openWinnersPopup(' + i + ')">' +
                 '<div class="challenge-header">' +
@@ -550,9 +567,12 @@ async function openWinnersPopup(i) {
             .filter(function(n) { return n.length > 0 && n.toLowerCase() !== 'meno' && n.toLowerCase() !== 'name'; });
 
         if (currentParticipants.length > 0) {
+            var wc = c.winnerCount || 1;
+            var hint = wc > 1 ? ('<div class="winner-count-hint">Vyžrebujú sa ' + wc + ' víťazky</div>') : '';
             // Účastníčky existujú — zobraz počet + formulár s heslom
             html += '<div style="text-align:center;margin:20px 0;">' +
                 '<p style="color:#475569;font-weight:600;margin-bottom:10px;">Počet účastníčok: ' + currentParticipants.length + '</p>' +
+                hint +
                 '<div class="roulette-wheel" id="popupRouletteWheel">' +
                 '<span class="roulette-result" id="popupRouletteResult">?</span>' +
                 '</div>' +
@@ -598,9 +618,14 @@ function checkPasswordAndSpin() {
     }
 }
 
+// ============================================================
+// ŽREBOVANIE — podporuje 1 alebo viac víťazok (bez opakovania)
+// ============================================================
 function spinChallengeRoulette() {
     if (!currentParticipants.length || isSpinning) return;
     isSpinning = true;
+    var ch          = challenges[currentChallengeIndex];
+    var winnerCount = Math.min(ch.winnerCount || 1, currentParticipants.length);
     var wheel  = document.getElementById('popupRouletteWheel');
     var result = document.getElementById('popupRouletteResult');
     wheel.classList.add('spinning');
@@ -611,15 +636,20 @@ function spinChallengeRoulette() {
         if (++counter > 30) clearInterval(interval);
     }, 100);
     setTimeout(function() {
-        var winner = currentParticipants[Math.floor(Math.random() * currentParticipants.length)];
-        result.textContent = winner;
+        var pool = currentParticipants.slice();
+        var winners = [];
+        for (var k = 0; k < winnerCount; k++) {
+            var idx = Math.floor(Math.random() * pool.length);
+            winners.push(pool[idx]);
+            pool.splice(idx, 1);
+        }
+        result.textContent = winners.join(', ');
         wheel.classList.remove('spinning');
         isSpinning = false;
         setTimeout(function() {
-            var ch = challenges[currentChallengeIndex];
-            var confirmed = confirm('VITAZKA:\n' + winner + '\n\nUlozit vysledok?');
+            var confirmed = confirm('VITAZKY:\n' + winners.join('\n') + '\n\nUlozit vysledok?');
             if (confirmed) {
-                alert('Pridajte do data_challenge_winners.json:\n\n"' + ch.month + ' - ' + ch.title + '": ["' + winner + '"]');
+                alert('Pridajte do data_challenge_winners.json:\n\n"' + ch.month + ' - ' + ch.title + '": ' + JSON.stringify(winners));
             }
         }, 500);
     }, 3200);
